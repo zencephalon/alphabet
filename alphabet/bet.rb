@@ -11,6 +11,7 @@ module Bets
                      type: :t,      # type of bet (string)
                      condition: :c, # condition for auto-arb bets (object ref)
     }
+    MONGO_TO_RUBY = RUBY_TO_MONGO.invert.freeze
 
     class Bet < Struct.new *RUBY_TO_MONGO.keys
         include Mongo
@@ -25,6 +26,22 @@ module Bets
 
         def mongo_to_ruby(mongo_obj)
             bet = Bet.new
+            mongo_obj.each do |key, val|
+                bet[MONGO_TO_RUBY[key.to_sym]] = val if val
+            end
+            return bet
+        end
+
+        def create(opt_hash)
+            bet = Bet.new
+            opt_hash.each do |opt, val|
+                bet[opt] = val
+            end
+
+            mongo_obj = bet.to_mongo
+            @bet_db.insert(mongo_obj)
+
+            return bet
         end
     end
 end
