@@ -53,6 +53,7 @@
 
 	//	Form a feed item from one listing object
 	var formFeedItem = function(item) {
+
 		var pLi =	"<li style='display: inline-block;'>"				+
 						"<img src='http://placehold.it/50x50'/>"		+
 						"<p>" + item.proposer + "(amount: <b>" + item.p_amount + "</b>)</p>" +
@@ -61,7 +62,23 @@
 						"<img src='http://placehold.it/50x50'/>"		+
 						"<p>" + item.acceptor + "(amount: <b>" + item.a_amount + "</b>)</p>" +
 					"</li>";
-		return pLi + aLi;
+
+		var display =	"<li>"		+
+						"<li>"		+
+						"<p><a href='#'>" + item.description + "</a></p>"	+ 
+						"<ul>"		+
+							pLi		+
+							aLi		+
+						"</ul>"		+
+						"<hr />"	+
+						"</li>";
+
+		return display;
+	};
+
+	//	Form the stakes section
+	var formStakesItem = function(stakes) {
+
 	};
 
 	//	Start a new bet
@@ -69,14 +86,22 @@
 		c.route("bet");
 	};
 
+	//	Get your total stakes
+	var getStakes = function() {
+		var stakesObj = c.get("stakes.json") || {hook: 0, win: 0};
+		var stakes = {hook: stakes.hook, win: stakes.win};
+		return stakes;
+	};
+
 	//	Prepare and display the sorted feed items
 	var init = function(sorter) {
 		sorter = sorter || "all";
 		var feedItems = getFeedItems();
 		var sorted = sortFeed(feedItems, sorter);
+		$("#feed").append("<hr />");
 		for (var i = 0; i < sorted.length; i++) {
 			var item = formFeedItem(sorted[i]);
-			$("feed").append(item);
+			$("#feed").append(item);
 		}
 	};
 
