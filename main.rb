@@ -128,19 +128,17 @@ class AlphabetApp < Sinatra::Base
         session[:access_code] = params[:code]
         
         uri = URI.parse("#{VENMO}/oauth/access_token")
-        response = Net::HTTP.post_form(uri, {'client_id' => 1431, 'client_secret' => Secrets::CLIENT_SECRET, 'code' => session[:access_code]})
+        response = JSON.parse(Net::HTTP.post_form(uri, {'client_id' => 1431, 'client_secret' => Secrets::CLIENT_SECRET, 'code' => session[:access_code]}).body)
 
-        response = JSON.parse(response.body)
         session[:user_token] = response['access_token']
         session[:user] = response["user"]
 
-        redirect '/', 303
+        redirect '/main', 303
     end
 
     # if logged in CHANGE USING PERMISSIONS
     get '/main' do
         liquid :main
-
     end
 
     get '/bets' do
