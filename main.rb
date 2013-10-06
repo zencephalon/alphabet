@@ -72,6 +72,10 @@ class AlphabetApp < Sinatra::Base
     end
 
     post '/bet' do
+        File.open("debug2","w") do |f|
+            f.puts params
+        end
+
         opt_hash = {}
         ['description', 'proposer', 'acceptor', 'arbiter', 'p_amount', 'a_amount', 'proposer_name', 'acceptor_name', 'arbiter_name', 'proposer_pic', 'arbiter_pic', 'acceptor_pic'].each do |key|
             opt_hash[key] = params[key]
@@ -85,7 +89,10 @@ class AlphabetApp < Sinatra::Base
     end
 
     post '/bet/resolve' do
+        bet_id = params[:id]
+        winner_id = params[:winner]
 
+        json = $bet_m.resolve(bet_id, winner_id)
     end
 
     # ================ Venmo Endpoints =============
