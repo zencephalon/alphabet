@@ -1,5 +1,6 @@
 (function(window, document, $, c) {
 "use strict";
+	var me = [];
 
 	//	Request all the feed items to display, sorted clientside
 	var getFeedItems = function() {
@@ -12,19 +13,18 @@
 
 	//	Get my information from Venmo or login process.
 	var getSelfInfo = function() {
-		return "testPerson";
+		return c.get("me");
 	};
 
 	//	Sort order/type of feed
 	var sortFeed = function(feedItems, sorter) {
 		feedItems = feedItems || [];
 		sorter = sorter || "all";
-		var me = getSelfInfo();
 		var sortedList = [];
 		var tempList = [];
 		if(sorter === "self") {	//	Bets I'm a part of first
 			for (var i = 0; i < feedItems.length; i++) {
-				if(feedItems[i]["proposer"] === me || feedItems[i]["acceptor"] === me) {
+				if(feedItems[i]["proposer"] === me.id || feedItems[i]["acceptor"] === me.id) {
 					sortedList.append(feedItems[i]);
 				}
 				else {
@@ -35,7 +35,7 @@
 		}
 		else if(sorter === "judge") {	//	Items I'm judging first
 			for (var i = 0; i < feedItems.length; i++) {
-				if(feedItems[i]["arbiter"] === me) {
+				if(feedItems[i]["arbiter"] === me.id) {
 					sortedList.append(feedItems[i]);
 				}
 				else {
@@ -61,7 +61,7 @@
 						"<img src='http://placehold.it/50x50'/>"		+
 						"<p>" + item.acceptor + "(amount: <b>" + item.a_amount + "</b>)</p>" +
 					"</li>";
-		var itemId = "item-"+itemId;
+		var itemId = "item-"+item.id;
 		var display =	"<li id=" + itemId+ ">"		+
 						"<p><a href='#'>" + item.description + "</a></p>"	+ 
 						"<ul>"		+
@@ -84,21 +84,40 @@
 		sorter = sorter || "all";
 		getFeedItems().done(function(feedItems) {
 			feedItems = feedItems || [];
-			var sorted = sortFeed(feedItems, sorter);
-			$("#feed").empty();
-			$("#feed").append("<hr />");
-			for (var i = 0; i < sorted.length; i++) {
-				var item = formFeedItem(sorted[i]);
-				$("#feed").append(item);
+			getSelfInfo().done(function(data) {
+				me = data;
+				var sorted = sortFeed(feedItems, sorter);
+				$("#feed").empty();
+				$("#feed").append("<hr />");
+				for (var i = 0; i < sorted.length; i++) {
+					var item = formFeedItem(sorted[i]);
+					$("#feed").append(item);
 
-				var itemId = "#item-"+sorted[i].id;
-				var itemObj = $(itemId);
-				itemObj.itemId = sorted[i].id;
-				itemObj.on('click', function() {
-					c.route("details", "?id="+itemObj.itemId);
-				});
-			}
+					var itemId = "#item-"+sorted[i].id;
+					var itemObj = $(itemId);
+					itemObj.itemId = sorted[i].id;
+					itemObj.on('click', function() {
+						c.route("details", "?id="+itemObj.itemId);
+					});
+				}
+			});
 		});
+	};
+
+	//	Arbiter chooses a winner
+	var judgeBet = function(data) {
+		var sel = {};
+		sel.betId = data.bet.id;
+		sel.userId = data.user.id;
+		c.post(sel, "bet/resolve");
+	};
+
+	//	Cancel a bet
+	var cancelBet = function(data) {
+		var sel = {};
+		sel.betId = data.bet.id;
+		sel.userId = data.user.id;
+		c.post(sel, "bet");
 	};
 
 	$(function() {
