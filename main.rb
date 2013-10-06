@@ -76,7 +76,7 @@ class AlphabetApp < Sinatra::Base
             f.puts params.keys
         end
 
-        parameters = JSON.parse(params.keys.first
+        parameters = JSON.parse(params.keys.first)
 
         opt_hash = {}
         ['description', 'proposer', 'acceptor', 'arbiter', 'p_amount', 'a_amount', 'proposer_name', 'acceptor_name', 'arbiter_name', 'proposer_pic', 'arbiter_pic', 'acceptor_pic'].each do |key|
