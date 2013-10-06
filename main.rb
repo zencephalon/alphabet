@@ -77,7 +77,7 @@ class AlphabetApp < Sinatra::Base
     end
 
     post '/bet/resolve' do
-        # take bet id and winner name
+
     end
 
     post '/bet' do
@@ -93,6 +93,18 @@ class AlphabetApp < Sinatra::Base
 
         if logged_in?
             return session[:user].to_json
+        else
+            return [].to_json
+        end
+    end
+
+    get '/friends.json' do
+        if logged_in?
+            uri = "https://api.venmo.com/users/#{session[:user]['id']}/friends?access_token=#{session[:user_token]}"
+
+            response = Net::HTTP.get(uri)
+            response = response.body
+            return response['data'].to_json
         else
             return [].to_json
         end
