@@ -2,11 +2,14 @@ require "mongo"
 
 module Bets
     RUBY_TO_MONGO = {_id: :_id,
-                     description: :d, # description of the bet (sub object)
-                     proposer: :p, # proposer of the bet
-                     acceptor: :a, # acceptor of the bet
-                     p_amount: :pa,# amount wagered by proposer
-                     a_amount: :aa# amount wagered by aceptor
+                     description: :d, # description of the bet (string)
+                     proposer: :p,  # proposer of the bet (string)
+                     acceptor: :a,  # acceptor of the bet (string)
+                     arbiter: :rb,  # arbiter of the bet (string optional)
+                     p_amount: :pa, # amount wagered by proposer in cents (int)
+                     a_amount: :aa, # amount wagered by aceptor in cents (int)
+                     type: :t,      # type of bet (string)
+                     condition: :c, # condition for auto-arb bets (object ref)
     }
 
     class Bet < Struct.new *RUBY_TO_MONGO.keys
