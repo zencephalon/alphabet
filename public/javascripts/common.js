@@ -5,15 +5,12 @@ window.common = (function ($, document, window) {
 
     var url = "http://alphabet.io/";
 
-
-
 	/***
 	*	Private methods
 	***/
 	var formUri = function(uri) {
 		return uri;
 	};
-
 
 	/***
 	 *	Public methods
