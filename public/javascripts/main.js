@@ -69,13 +69,13 @@
 			winnings = item.a_amount;
 			losses = item.p_amount;
 			nemesis = item.acceptor_name;
-			nemesisImage = item.acceptor_image;
+			nemesisImage = item.acceptor_pic;
 		}
 		else if(item.acceptor == me.id) {	//	I am the acceptor
 			winnings = item.p_amount;
 			losses = item.a_amount;
 			nemesis = item.proposer_name;
-			nemesisImage = item.proposer_image;
+			nemesisImage = item.proposer_pic;
 		}
 		else {	//	I am the arbiter
 			nemesis = "Neutral";
