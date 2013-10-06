@@ -50,6 +50,7 @@
 	var init = function(sorter) {
 		sorter = sorter || DEFAULT_CATEGORY;
 		getCategories().done(function(categories) {
+			categories = ["general"];
 			var chosen = 0;
 			for (var i = 0; i < categories.length; i++) {
 				if(categories[i] === sorter) {
@@ -68,8 +69,8 @@
 			}
 		});
 
-		// var nemesis = null;
-		// $("#pUser").append(me.name);
+		// var nemesis = {name: "test"};
+		$("#pUser").append(me.name);
 		// $("#aUser").append(nemesis.name);
 
 		$("#bet").on('click', function() {
@@ -81,7 +82,7 @@
 	};
 
 	$(function() {
-		getSelfInfo(function(data) {
+		getSelfInfo().done(function(data) {
 			me = data;
 			getFriends().done(function(friendList) {
 				friends = friendList;
