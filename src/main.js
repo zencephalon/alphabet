@@ -76,18 +76,6 @@
 		return display;
 	};
 
-	//	Form the stakes section
-	var formStakesItem = function(stakes) {
-		var display =	"<li style='display: inline-block; width: 200px; text-align: center;'>" +
-							"<h4>on the hook</h4>"			+
-							"<h2>" + stakes.hook + "</h2>"	+
-						"</li>"								+
-						"<li style='display: inline-block; width: 200px; text-align: center;'>" +
-							"<h4>could win</h4>"			+
-							"<h2>" + stakes.win + "</h2>"	+
-						"</li>";
-	};
-
 	//	Start a new bet
 	var makeBet = function() {
 		c.route("bet");
@@ -96,8 +84,15 @@
 	//	Get your total stakes
 	var getStakes = function() {
 		var stakesObj = c.get("stakes.json") || {hook: 0, win: 0};
-		var stakes = {hook: stakes.hook, win: stakes.win};
+		var stakes = {hook: stakesObj.hook, win: stakesObj.win};
 		return stakes;
+	};
+
+	//	Form the stakes section
+	var injectStakes = function() {
+		var stakes = getStakes();
+		$("#stakesHook").append(stakes.hook);
+		$("#stakesWin").append(stakes.win);
 	};
 
 	//	Prepare and display the sorted feed items
@@ -114,6 +109,7 @@
 
 	$(function() {
 		init();	//	init the page with feed when ready
+		injectStakes();
 
 		$("#sortAll").click(function() {
 			init("all");
