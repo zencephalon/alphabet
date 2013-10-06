@@ -45,7 +45,7 @@ window.common = (function ($, document, window) {
 	};
 
 	common.delete = function (endpoint, data) {
-		endpoint = endpoint || "bets";
+		endpoint = endpoint || "bet";
 		endpoint = url + endpoint + ".json";
 		var ret = new $.Deferred();
 		$.ajax({
