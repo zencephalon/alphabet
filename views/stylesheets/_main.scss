@@ -25,6 +25,7 @@
 			text-align: center;
 			@include adjust-font-size-to(32px);
 			font-weight: 400;
+			margin: 50px 0px 10px;
 		}
 	}
 
@@ -35,19 +36,34 @@
 			padding: 0px;
 			li {
 				display: inline-block; 
-				width: 200px; 
+				width: 225px; 
 				text-align: center;
-				background-color: $green;
+				border-radius: 3px;
+				border-width: 1px 2px 2px 1px;
+				color: darken(#165611, 20%);
+				border: 2px solid darken(#165611, 20%);
 				h4 {
-					@include adjust-font-size-to(19px);
-					margin: 20px 0px 20px;
+					@include adjust-font-size-to(24px);
+					margin: 20px 0px 0px;
+					font-weight: 300;
 				}
 				h2 {
-					@include adjust-font-size-to(42px);
+					@include adjust-font-size-to(48px);
 					font-weight: 500;
-					margin: 20px 0px;
+					margin: 0px 0px 10px;
 
 				}
+				&:first-child{
+					margin-right: 20px;
+				}
+			}
+
+			#stakesHook {
+				color: $red;
+			}
+
+			#stakesWin {
+				color: #2CAC21;
 			}
 		}
 	}
