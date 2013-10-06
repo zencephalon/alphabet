@@ -8,9 +8,6 @@ class Alphabet
     def initialize(client)
         @client = client
         @db = @client.db('alphabet')
-        @bet_m = BetManager.new(self)
+        @bet_m = Bets::BetManager.new(self)
     end
-
-
-
 end

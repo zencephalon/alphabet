@@ -1,4 +1,4 @@
-require "mongo"
+require_relative "./mongo"
 
 module Bets
     RUBY_TO_MONGO = {_id: :_id,
@@ -14,8 +14,11 @@ module Bets
     MONGO_TO_RUBY = RUBY_TO_MONGO.invert.freeze
 
     class Bet < Struct.new *RUBY_TO_MONGO.keys
+        def self.ruby_to_mongo 
+            RUBY_TO_MONGO
+        end
+
         include Mongo
-        ruby_to_mongo = RUBY_TO_MONGO
     end
 
     class BetManager
