@@ -29,18 +29,22 @@ window.common = (function ($, document, window) {
 	common.post = function(data, endpoint) {
 		endpoint = endpoint || "bets";
 		endpoint = url + endpoint;
+		var ret = new $.Deferred();
 		$.post(endpoint, function(data) {
-			// $( ".result" ).html( data );
-			window.console.dir(data);
+			ret.resolve(data);
 		});
+		return ret.promise();
 	};
 
 	common.get = function(endpoint) {
 		endpoint = endpoint || "bets";
 		endpoint = url + endpoint + ".json";
+		var ret = new $.Deferred();
 		$.getJSON(endpoint, function(data) {
 			window.console.dir(data);
+			ret.resolve(data);
 		});
+		return ret.promise();
 	};
 
 	//	Redirect to new page

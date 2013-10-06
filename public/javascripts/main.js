@@ -3,12 +3,12 @@
 
 	//	Request all the feed items to display, sorted clientside
 	var getFeedItems = function() {
-		// var feedItems = c.get("feed.json");
-		// return feedItems || [];
-		return [{proposer: "joe", acceptor: "jill", arbiter: "lauren", 
-			p_amount: 100, a_amount: 50, description: "how quickly will venmo shut this down?", id: 1 },
-			{proposer: "kate", acceptor: "vick", arbiter: "lauren", 
-			p_amount: 300, a_amount: 800, description: "is the sky falling?", id: 2 }];
+		var feedItems = c.get("feed");
+		return feedItems || [];
+		// return [{proposer: "joe", acceptor: "jill", arbiter: "lauren", 
+		// 	p_amount: 100, a_amount: 50, description: "how quickly will venmo shut this down?", id: 1 },
+		// 	{proposer: "kate", acceptor: "vick", arbiter: "lauren", 
+		// 	p_amount: 300, a_amount: 800, description: "is the sky falling?", id: 2 }];
 	};
 
 	//	Get my information from Venmo or login process.
