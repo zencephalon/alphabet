@@ -1,9 +1,11 @@
 (function(window, document, $, c) {
 "use strict";
 
+	var DEFAULT_CATEGORY = "general";
+
 	//	Get all types of betting categories
 	var getCategories = function() {
-		var categories = c.get("categories") || ["General"];
+		var categories = c.get("categories") || ["general"];
 		return categories || [];
 	};
 
@@ -24,7 +26,7 @@
 	//	Display data for a specific category
 	var showCategoryData = function(cat) {
 		var data = "";
-		if(cat === "General") {
+		if(cat === "general") {
 			data =	"Bet: <input type='text' name='bet' id='bet'>";
 		}
 		$('#form').empty();
@@ -34,7 +36,7 @@
 
 	//	Inject the category options, select a default, and setup on click events.
 	var init = function(sorter) {
-		sorter = sorter || "General";
+		sorter = sorter || DEFAULT_CATEGORY;
 		var categories = getCategories();
 		var chosen = 0;
 		for (var i = 0; i < categories.length; i++) {
