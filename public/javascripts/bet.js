@@ -93,6 +93,7 @@
 			data.aPic = ("#aUser-dropdown option:selected").picture;
 			data.description = $("#bet").val();
 
+			window.console.dir(data);
 			c.post(data, "bet").done(function() {
 				c.route("main");
 			});
