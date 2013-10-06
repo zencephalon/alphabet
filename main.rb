@@ -80,6 +80,14 @@ class AlphabetApp < Sinatra::Base
 
     end
 
+    get '/bet.json' do
+        content_type :json
+        id = params[:_id]
+
+        bet = $bet_m.get(id)
+        return (bet ? bet : []).to_json
+    end
+
     post '/bet' do
         opt_hash = {}
         ['description', 'proposer', 'acceptor', 'arbiter', 'p_amount', 'a_amount'].each do |key|
@@ -124,19 +132,7 @@ class AlphabetApp < Sinatra::Base
         session[:user_token] = response['access_token']
         session[:user] = response["user"]
 
-        File.open("debug","w") do |f|
-            f.puts Secrets::CLIENT_SECRET
-            f.puts session[:access_code]
-            f.puts response.class
-            f.puts "-------------"
-            f.puts session[:user]
-        end
-
         redirect '/', 303
-    end
-
-    get '/logout' do
-
     end
 
     # if logged in CHANGE USING PERMISSIONS
@@ -145,9 +141,8 @@ class AlphabetApp < Sinatra::Base
 
     end
 
-    get '/bet' do
+    get '/bets' do
         liquid :bet
-
     end
 
     not_found do
