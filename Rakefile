@@ -8,7 +8,7 @@ alphabet = Alphabet.new(Mongo::MongoClient.new('localhost', 27017))
 bet_m = alphabet.bet_m
 
 task :clean do |t|
-    mongo client.drop_database('alphabet')
+    mongo mongo_client.drop_database('alphabet')
 end
 
 task :setup do |t|

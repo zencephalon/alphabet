@@ -73,15 +73,19 @@ class AlphabetApp < Sinatra::Base
 
     post '/bet' do
         File.open("debug2","w") do |f|
-            f.puts params
+            f.puts params.keys
         end
+
+        parameters = JSON.parse(params.keys.first)
 
         opt_hash = {}
         ['description', 'proposer', 'acceptor', 'arbiter', 'p_amount', 'a_amount', 'proposer_name', 'acceptor_name', 'arbiter_name', 'proposer_pic', 'arbiter_pic', 'acceptor_pic'].each do |key|
-            opt_hash[key] = params[key]
+            opt_hash[key] = parameters[key]
         end
 
         $bet_m.create(opt_hash)
+
+        ""
     end
 
     delete '/bet' do

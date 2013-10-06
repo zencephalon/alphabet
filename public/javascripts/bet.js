@@ -58,6 +58,7 @@
 		sorter = sorter || DEFAULT_CATEGORY;
 		injectFriends();
 		$("#pImage").attr("src", me.picture); 
+		$("#aImage").attr("src", $("#aUser-dropdown option:selected").val()); 
 		getCategories().done(function(categories) {
 			categories = ["general"];
 			var chosen = 0;
@@ -85,15 +86,16 @@
 		$("#bet").on('click', function() {
 			window.console.log("placing a bet");
 			var data = {};
-			data.pUser = me.id;
-			data.pAmount = $("#p_amount").val();
-			data.pPic = me.picture;
-			data.aUser = $("#aUser-dropdown option:selected").attr("id");
-			data.aAmount = $("#a_amount").val();
-			data.aPic = $("#aUser-dropdown option:selected").pic;
+			data.poser = me.id;
+			data.p_amount = $("#p_amount").val();
+			data.poser_pic = me.picture;
+			data.acceptor = $("#aUser-dropdown option:selected").attr("id");
+			data.a_amount = $("#a_amount").val();
+			data.acceptor_pic = $("#aUser-dropdown option:selected").val();
+			data.arbiter = 1;
 			data.description = $("#bet").val();
 
-			data = JSON.serialize(data);
+			data = JSON.stringify(data);
 
 			window.console.dir(data);
 			c.post(data, "bet").done(function() {
@@ -102,8 +104,8 @@
 		});
 
 		$("#aUser-dropdown").change(function() {
-			var sel = $(this).val();
-			$("#aImage").attr("src", sel.pic); 
+			var pic = $(this).val();
+			$("#aImage").attr("src", pic); 
 		});
 	};
 
