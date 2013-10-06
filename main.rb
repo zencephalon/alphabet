@@ -72,7 +72,7 @@ class AlphabetApp < Sinatra::Base
 
     post '/bet' do
         opt_hash = {}
-        ['description', 'proposer', 'acceptor', 'arbiter', 'p_amount', 'a_amount'].each do |key|
+        ['description', 'proposer', 'acceptor', 'arbiter', 'p_amount', 'a_amount', 'proposer_name', 'acceptor_name', 'arbiter_name', 'proposer_pic', 'arbiter_pic', 'acceptor_pic'].each do |key|
             opt_hash[key] = params[key]
         end
 
@@ -98,6 +98,16 @@ class AlphabetApp < Sinatra::Base
         content_type :json
         if logged_in?
             uri = URI.parse("#{VENMO}/users/#{session[:user]['id']}/friends?access_token=#{session[:user_token]}&limit=1000")
+            return Net::HTTP.get(uri)
+        else
+            return [].to_json
+        end
+    end
+
+    get '/user.json' do
+        id = params[:id]
+        if logged_in?
+            uri = URI.parse("#{VENMO}/users/#{id}?access_token=#{session[:user_token]}")
             return Net::HTTP.get(uri)
         else
             return [].to_json
