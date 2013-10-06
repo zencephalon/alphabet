@@ -30,6 +30,13 @@ window.common = (function ($, document, window) {
 		$.post(endpoint, data, function(data) {
 			ret.resolve(data);
 		});
+		$.ajax({
+			type: "POST",
+			url: endpoint,
+			data: data
+		}).done(function(data) {
+			ret.resolve(data);
+		}); 
 		return ret.promise();
 	};
 
