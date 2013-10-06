@@ -9,6 +9,9 @@ module Bets
                      proposer_name: :pn,
                      acceptor_name: :an,
                      arbiter_name: :rbn,
+                     proposer_pic: :pp,
+                     acceptor_pic: :ap,
+                     arbiter_pic: :rbp,
                      p_amount: :pa, # amount wagered by proposer in cents (int)
                      a_amount: :aa, # amount wagered by aceptor in cents (int)
                      type: :t,      # type of bet (string)

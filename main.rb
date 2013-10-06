@@ -72,7 +72,7 @@ class AlphabetApp < Sinatra::Base
 
     post '/bet' do
         opt_hash = {}
-        ['description', 'proposer', 'acceptor', 'arbiter', 'p_amount', 'a_amount', 'proposer_name', 'acceptor_name', 'arbiter_name'].each do |key|
+        ['description', 'proposer', 'acceptor', 'arbiter', 'p_amount', 'a_amount', 'proposer_name', 'acceptor_name', 'arbiter_name', 'proposer_pic', 'arbiter_pic', 'acceptor_pic'].each do |key|
             opt_hash[key] = params[key]
         end
 
