@@ -81,25 +81,13 @@
 		c.route("bet");
 	};
 
-	//	Get your total stakes
-	var getStakes = function() {
-		var stakesObj = c.get("stakes.json") || {hook: 0, win: 0};
-		var stakes = {hook: stakesObj.hook, win: stakesObj.win};
-		return stakes;
-	};
-
-	//	Form the stakes section
-	var injectStakes = function() {
-		var stakes = getStakes();
-		$("#stakesHook").append(stakes.hook);
-		$("#stakesWin").append(stakes.win);
-	};
-
 	//	Prepare and display the sorted feed items
 	var init = function(sorter) {
 		sorter = sorter || "all";
 		var feedItems = getFeedItems();
 		var sorted = sortFeed(feedItems, sorter);
+		$("#feed").clear();
+		
 		$("#feed").append("<hr />");
 		for (var i = 0; i < sorted.length; i++) {
 			var item = formFeedItem(sorted[i]);
@@ -109,7 +97,6 @@
 
 	$(function() {
 		init();	//	init the page with feed when ready
-		injectStakes();
 
 		$("#sortAll").click(function() {
 			init("all");
