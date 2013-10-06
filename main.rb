@@ -6,7 +6,6 @@ require 'mongo'
 require 'json'
 require 'net/http'
 require 'uri'
-
 require 'compass'
 
 require_relative './alphabet/alphabet'
@@ -33,16 +32,13 @@ class AlphabetApp < Sinatra::Base
 
     get '/categories.json' do
         content_type :json
-
         ['general'].to_json
     end
 
     # ================= Bets ===================
     get '/feed.json' do
         content_type :json
-
-        bets = $bet_m.get_all
-        bets.to_json
+        $bet_m.get_all.to_json
     end
 
     get '/bets' do
