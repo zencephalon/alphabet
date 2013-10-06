@@ -44,7 +44,7 @@ class AlphabetApp < Sinatra::Base
         liquid :index
     end
 
-    get '/main', auth: :user do
+    get '/main' do
         liquid :main
     end
 
@@ -63,7 +63,7 @@ class AlphabetApp < Sinatra::Base
         liquid :bet
     end
     
-    get '/bet.json' do
+    get '/bet.json', auth: :user do
         content_type :json
         id = params[:_id]
 
@@ -71,7 +71,7 @@ class AlphabetApp < Sinatra::Base
         return (bet ? bet : []).to_json
     end
 
-    post '/bet', auth: :user do
+    post '/bet' do
         File.open("debug2","w") do |f|
             f.puts params
         end
