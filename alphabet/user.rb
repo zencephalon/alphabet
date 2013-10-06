@@ -27,7 +27,12 @@ module Users
             end
 
             mongo_obj = user.to_mongo
-            @user_db.insert(mongo_obj)
+
+            begin
+                @user_db.insert(mongo_obj)
+            rescue Mongo::OperationFailure => e
+                user = get(opt_hash['_id'])
+            end
 
             return user
         end

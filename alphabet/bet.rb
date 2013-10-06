@@ -31,7 +31,8 @@ module Bets
     class BetManager
         def initialize(alphabet)
             @alphabet = alphabet
-            @bet_db = alphabet.db.collection('bets')
+            @bet_db = @alphabet.db.collection('bets')
+            @user_m = @alphabet.user_m
         end
 
         def mongo_to_ruby(mongo_obj)
@@ -58,6 +59,16 @@ module Bets
             bet = get(id)
             if bet
                 bet.resolved = user_id
+                p = bet.proposer
+                proposer = @user_m.get(p)
+
+                # the proposer won the bet, he makes a charge
+               # if p == user_id
+               #     uri = URI.parse("https://api.venmo.com/payments
+               # else
+
+               # end
+
             end
         end
 
