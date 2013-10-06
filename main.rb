@@ -129,7 +129,7 @@ class AlphabetApp < Sinatra::Base
         session[:user_token] = response['access_token']
         session[:user] = response['user']
 
-        $user_m.create({_id: session[:user]['id'], token: session[:user_token])
+        $user_m.create({_id: session[:user]['id'], token: session[:user_token]})
 
         redirect '/main', 303
     end
