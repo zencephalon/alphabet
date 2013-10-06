@@ -85,7 +85,10 @@ class AlphabetApp < Sinatra::Base
     end
 
     post '/bet/resolve' do
+        bet_id = params[:id]
+        winner_id = params[:winner]
 
+        json = $bet_m.resolve(bet_id, winner_id)
     end
 
     # ================ Venmo Endpoints =============
