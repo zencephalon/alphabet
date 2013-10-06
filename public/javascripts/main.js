@@ -61,8 +61,8 @@
 						"<img src='http://placehold.it/50x50'/>"		+
 						"<p>" + item.acceptor + "(amount: <b>" + item.a_amount + "</b>)</p>" +
 					"</li>";
-
-		var display =	"<li>"		+
+		var itemId = "item-"+itemId;
+		var display =	"<li id=" + itemId+ ">"		+
 						"<p><a href='#'>" + item.description + "</a></p>"	+ 
 						"<ul>"		+
 							pLi		+
@@ -90,6 +90,13 @@
 			for (var i = 0; i < sorted.length; i++) {
 				var item = formFeedItem(sorted[i]);
 				$("#feed").append(item);
+
+				var itemId = "#item-"+sorted[i].id;
+				var itemObj = $(itemId);
+				itemObj.itemId = sorted[i].id;
+				itemObj.on('click', function() {
+					c.route("details", "?id="+itemObj.itemId);
+				});
 			}
 		});
 	};
