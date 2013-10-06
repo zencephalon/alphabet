@@ -1,0 +1,55 @@
+#main {
+	nav {
+		text-align: center;
+		.navButton {
+			background-color: $white;
+			height: 100px;
+			border: 0px;
+			border: 3px solid $logo;
+			border-radius: 3px;
+			width: 300px;
+			@include adjust-font-size-to(32px);
+			font-weight: 300;
+			&:first-child {
+				margin-right: 32px;
+			}
+			&:focus {
+				// box-shadow: 0px 0px 3pt 2pt red; 
+				outline: 0;
+			}
+		}
+	}
+
+	section {
+		h2 {
+			text-align: center;
+			@include adjust-font-size-to(32px);
+			font-weight: 400;
+		}
+	}
+
+	.stakes {
+		ul {
+			text-align: center;
+			margin: 0px;
+			padding: 0px;
+			li {
+				display: inline-block; 
+				width: 200px; 
+				text-align: center;
+				background-color: $green;
+				h4 {
+					@include adjust-font-size-to(19px);
+					margin: 20px 0px 20px;
+				}
+				h2 {
+					@include adjust-font-size-to(42px);
+					font-weight: 500;
+					margin: 20px 0px;
+
+				}
+			}
+		}
+	}
+
+}

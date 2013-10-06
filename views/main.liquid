@@ -10,33 +10,38 @@
 	</head>
 
 	<body>
-		<header>
-			<h1>alphabet</h1>
-			<p>social betting</p>
-		</header>
-		<nav>
-			<button id="makeBet"><i class="icon-ticket"></i>make bet</button>
-			<button id="makeBet"><i class="icon-legal"></i>decide bets</button>
-		</nav>
-		<section>
-		<h2>Stakes</h2>
-		<ul>
-			<li style="display: inline-block; width: 200px; text-align: center;">
-				<h4>on the hook</h4>
-				<h2 id="stakesHook">{{hook}}</h2>
-			</li>
-			<li style="display: inline-block; width: 200px; text-align: center;">
-				<h4>could win</h4>
-				<h2 id="stakesWin">{{wins}}</h2>
-			</li>
-		</ul>
-		</section>
+		<div class="container" id="main">
+			<header>
+				<h1 class="logo">alpha<span aria-hidden="true" class="icon-shake-diff symbol"></span>bet</h1>
+			</header>
+			<nav>
+				<button id="makeBet" class="navButton"><i class="icon-ticket"></i> make bet</button>
+				<button id="decideBet" class="navButton"><i class="icon-legal"></i> decide bets</button>
+			</nav>
 
-		<h2>Your Bets</h2>
-		<ul id="feed">			
-			<!-- Feed of bets -->
-		</ul>
+			<br />
 
+			<section class="stakes">
+				<h2>Stakes</h2>
+				<ul>
+					<li>
+						<h4 class="condensed">on the hook</h4>
+						<h2 id="stakesHook">$23</h2>
+					</li>
+					<li>
+						<h4 class="condensed">could win</h4>
+						<h2 id="stakesWin">$23</h2>
+					</li>
+				</ul>
+			</section>
 
+			<section class="your-bets">
+				<h2>Your Bets</h2>
+				<ul id="feed">			
+					<!-- Feed of bets -->
+				</ul>
+			</section>
+
+		</div>
 	</body>
 </html>
