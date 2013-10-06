@@ -24,7 +24,7 @@
 		var tempList = [];
 		if(sorter === "self") {	//	Bets I'm a part of first
 			for (var i = 0; i < feedItems.length; i++) {
-				if(feedItems[i]["proposer"] === me.username || feedItems[i]["acceptor"] === me.username) {
+				if(feedItems[i]["proposer"] === me.id || feedItems[i]["acceptor"] === me.id) {
 					sortedList.append(feedItems[i]);
 				}
 				else {
@@ -35,7 +35,7 @@
 		}
 		else if(sorter === "judge") {	//	Items I'm judging first
 			for (var i = 0; i < feedItems.length; i++) {
-				if(feedItems[i]["arbiter"] === me.username) {
+				if(feedItems[i]["arbiter"] === me.id) {
 					sortedList.append(feedItems[i]);
 				}
 				else {
@@ -61,7 +61,7 @@
 						"<img src='http://placehold.it/50x50'/>"		+
 						"<p>" + item.acceptor + "(amount: <b>" + item.a_amount + "</b>)</p>" +
 					"</li>";
-		var itemId = "item-"+itemId;
+		var itemId = "item-"+item.id;
 		var display =	"<li id=" + itemId+ ">"		+
 						"<p><a href='#'>" + item.description + "</a></p>"	+ 
 						"<ul>"		+
@@ -85,7 +85,6 @@
 		getFeedItems().done(function(feedItems) {
 			feedItems = feedItems || [];
 			getSelfInfo().done(function(data) {
-				window.console.dir(data);
 				me = data;
 				var sorted = sortFeed(feedItems, sorter);
 				$("#feed").empty();
