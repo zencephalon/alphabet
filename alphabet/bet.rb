@@ -1,4 +1,4 @@
-require_relative "./mongo"
+require_relative './mongo'
 
 module Bets
     RUBY_TO_MONGO = {_id: :_id,
@@ -11,7 +11,7 @@ module Bets
                      type: :t,      # type of bet (string)
                      condition: :c, # condition for auto-arb bets (object ref)
                      resolved: :r,
-    }
+    }.freeze
     MONGO_TO_RUBY = RUBY_TO_MONGO.invert.freeze
 
     class Bet < Struct.new *RUBY_TO_MONGO.keys

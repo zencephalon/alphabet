@@ -104,6 +104,16 @@ class AlphabetApp < Sinatra::Base
         end
     end
 
+    get '/user.json' do
+        id = params[:id]
+        if logged_in?
+            uri = URI.parse("#{VENMO}/users/#{id}?access_token=#{session[:user_token]}")
+            return Net::HTTP.get(uri)
+        else
+            return [].to_json
+        end
+    end
+
     # =================== Login ====================
     get '/login' do
         redirect "#{VENMO}/oauth/authorize?client_id=1431&scope=ACCESS_FRIENDS,ACCESS_PROFILE,MAKE_PAYMENTS&response_type=code", 303
