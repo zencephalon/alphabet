@@ -84,8 +84,9 @@
 		$("#bet").on('click', function() {
 			window.console.log("placing a bet");
 			var formData = $('#form').serializeArray();
-			c.post(formData, "bet");
-			c.route("main");
+			c.post(formData, "bet").done(function() {
+				c.route("main");
+			});
 		});
 	};
 
@@ -93,7 +94,7 @@
 		getSelfInfo().done(function(data) {
 			me = data;
 			getFriends().done(function(friendList) {
-				friends = friendList.data;
+				friends = (friendList.data).sort();
 				window.console.dir(friends.data);
 				init();	//	init the page with default category
 			});
