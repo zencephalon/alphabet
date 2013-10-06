@@ -5,7 +5,7 @@
 
 @import "compass";
 @import "compass/css3";
-@import "compass/reset";
+@import "normalize";
 @import "clearfix";
 
 /* colors */
@@ -16,7 +16,7 @@ $green: #C8F576;
 $blue: #0063FE;
 
 
-@import "fonts/font.css";
+@import "/fonts/font.css";
 @import "home.scss";
 
 body {
