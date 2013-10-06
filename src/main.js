@@ -27,7 +27,7 @@
 
 	//	Start a new bet
 	var makeBet = function() {
-
+		c.route("bet");
 	};
 
 })(window, document, window.$, window.common);

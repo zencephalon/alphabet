@@ -5,6 +5,19 @@ window.common = (function ($, document, window) {
 
     var url = "http://alphabet.io";
 
+
+
+	/***
+	*	Private methods
+	***/
+	var formUri = function(uri) {
+		return uri;
+	};
+
+
+	/***
+	 *	Public methods
+	 ***/
     common.isset = function (check) {
         var test = (typeof check !== 'undefined' && check !== null && check !== "");
         if (check instanceof Array) {
@@ -24,11 +37,23 @@ window.common = (function ($, document, window) {
 	common.get = function(endpoint) {
 		endpoint = endpoint || "/bets.json";
 		$.getJSON(endpoint, function( data ) {
-			var items = [];
-			$.each(data, function( key, val ) {
-				items.push( "<li id ='" + key + "'>" + val + "</li>" );
-			});
+			window.console.dir(data);
+			// var items = [];
+			// $.each(data, function( key, val ) {
+			//	items.push( "<li id ='" + key + "'>" + val + "</li>" );
+			// });
 		});
+	};
+
+	//	Redirect to new page
+	common.route = function(page, uri) {
+		uri = uri || "";
+		page = page || "index";
+		page = "/" + page + ".html";
+		if(this.isset(uri)) {
+			page += formUri(uri);
+		}
+		window.open(page);
 	};
 
     return common;
