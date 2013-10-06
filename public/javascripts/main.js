@@ -85,6 +85,7 @@
 		getFeedItems().done(function(feedItems) {
 			feedItems = feedItems || [];
 			getSelfInfo().done(function(data) {
+				window.console.dir(data);
 				me = data;
 				var sorted = sortFeed(feedItems, sorter);
 				$("#feed").empty();
