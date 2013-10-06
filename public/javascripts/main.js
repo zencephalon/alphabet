@@ -107,7 +107,7 @@
 			getSelfInfo().done(function(data) {
 				me = data;
 				var sorted = sortFeed(feedItems, sorter);
-				// $("#feed").empty();
+				$("#feed").empty();
 				$("#feed").append("<hr />");
 				for (var i = 0; i < sorted.length; i++) {
 					var item = formFeedItem(sorted[i]);
