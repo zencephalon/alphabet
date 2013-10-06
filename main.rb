@@ -22,50 +22,13 @@ class AlphabetApp < Sinatra::Base
     $alphabet = Alphabet.new(Mongo::MongoClient.new('localhost', 27017))
     $bet_m = $alphabet.bet_m
 
-    configure do
-        Compass.configuration do |config|
-            config.project_path = File.dirname(__FILE__)
-            config.sass_path = 'views/stylesheets/'
-        end
-
-        set :sass, Compass.sass_engine_options
-        set :scss, Compass.sass_engine_options
-    end
-
-    get '/sass.css' do
-        sass :sass_file
-    end
-
-    get '/screen.css' do
-         scss(:"stylesheets/screen" )
-    end
-
-
-    helpers do
-        def logged_in?
-            !session[:user].nil?
-        end
-
-        def user
-            session[:user]
-        end
-    end
-
-    set(:auth) do |roles|
-        condition do
-            redirect '/login', 303 unless logged_in?
-        end
-    end
-
+    # ============== Main Site Routs ============
     get '/' do
         liquid :index
     end
 
-    get '/feed.json' do
-        content_type :json
-
-        bets = $bet_m.get_all
-        bets.to_json
+    get '/main', auth: :user do
+        liquid :main
     end
 
     get '/categories.json' do
@@ -74,14 +37,18 @@ class AlphabetApp < Sinatra::Base
         ['general'].to_json
     end
 
-    get '/login' do
-        redirect "#{VENMO}/oauth/authorize?client_id=1431&scope=ACCESS_FRIENDS,ACCESS_PROFILE,MAKE_PAYMENTS&response_type=code", 303
+    # ================= Bets ===================
+    get '/feed.json' do
+        content_type :json
+
+        bets = $bet_m.get_all
+        bets.to_json
     end
 
-    post '/bet/resolve' do
-
+    get '/bets' do
+        liquid :bet
     end
-
+    
     get '/bet.json' do
         content_type :json
         id = params[:_id]
@@ -103,25 +70,30 @@ class AlphabetApp < Sinatra::Base
         # delete a bet
     end
 
+    post '/bet/resolve' do
+
+    end
+
+    # ================ Venmo Endpoints =============
+
     get '/me.json' do
         content_type :json
-
-        if logged_in?
-            return session[:user].to_json
-        else
-            return [].to_json
-        end
+        return (logged_in? ? session[:user] : []).to_json
     end
 
     get '/friends.json' do
         content_type :json
         if logged_in?
             uri = URI.parse("#{VENMO}/users/#{session[:user]['id']}/friends?access_token=#{session[:user_token]}&limit=1000")
-
             return Net::HTTP.get(uri)
         else
             return [].to_json
         end
+    end
+
+    # =================== Login ====================
+    get '/login' do
+        redirect "#{VENMO}/oauth/authorize?client_id=1431&scope=ACCESS_FRIENDS,ACCESS_PROFILE,MAKE_PAYMENTS&response_type=code", 303
     end
 
     get '/venmo_login' do
@@ -136,21 +108,49 @@ class AlphabetApp < Sinatra::Base
         redirect '/main', 303
     end
 
-    # if logged in CHANGE USING PERMISSIONS
-    get '/main' do
-        liquid :main
-    end
-
-    get '/bets' do
-        liquid :bet
-    end
-
+    # ============ Error Pages =========================
     not_found do
         liquid :fourohfour, layout: false
     end
 
     error do
         liquid :fivehundred, layout: false
+    end
+
+    # ================== Compass =======================
+    configure do
+        Compass.configuration do |config|
+            config.project_path = File.dirname(__FILE__)
+            config.sass_path = 'views/stylesheets/'
+        end
+
+        set :sass, Compass.sass_engine_options
+        set :scss, Compass.sass_engine_options
+    end
+
+    get '/sass.css' do
+        sass :sass_file
+    end
+
+    get '/screen.css' do
+         scss(:"stylesheets/screen" )
+    end
+
+    # ============ Helpers ==================
+    helpers do
+        def logged_in?
+            !session[:user].nil?
+        end
+
+        def user
+            session[:user]
+        end
+    end
+
+    set(:auth) do |roles|
+        condition do
+            redirect '/login', 303 unless logged_in?
+        end
     end
 end
 
