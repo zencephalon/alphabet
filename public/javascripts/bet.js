@@ -49,8 +49,7 @@
 		$("#aUser-dropdown").empty();
 		for (var i = 0; i < friends.length; i++) {
 			$("#aUser-dropdown").append("<option id=" + friends[i].id + " value='" + 
-				friends[i].id + "'>" + friends[i].display_name + "</option>");
-			$("#"+friends[i].id).pic = friends[i].profile_picture_url;
+				friends[i].profile_picture_url + "'>" + friends[i].display_name + "</option>");
 		}
 	};
 
@@ -89,10 +88,12 @@
 			data.pUser = me.id;
 			data.pAmount = $("#p_amount").val();
 			data.pPic = me.picture;
-			data.aUser = $("#aUser-dropdown option:selected").val();
+			data.aUser = $("#aUser-dropdown option:selected").attr("id");
 			data.aAmount = $("#a_amount").val();
 			data.aPic = $("#aUser-dropdown option:selected").pic;
 			data.description = $("#bet").val();
+
+			data = JSON.serialize(data);
 
 			window.console.dir(data);
 			c.post(data, "bet").done(function() {
