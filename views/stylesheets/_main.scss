@@ -13,12 +13,15 @@
 			font-weight: 300;
 			&:first-child {
 				margin-right: 32px;
+				&:hover {
+					  background: linear-gradient(to bottom, $white 70%, rgba(#6ADFEE, .6) 98%, $white 100%);
+				}
+				&:active {
+					  background: linear-gradient(to bottom, $white 70%, rgba(#6ADFEE, .6) 98%, $white 100%);
+				}
 			}
-			&:hover {
-				  background: linear-gradient(to bottom, $white 70%, rgba(#6ADFEE, .6) 98%, $white 100%);
-			}
-			&:active {
-				  background: linear-gradient(to bottom, $white 70%, rgba(#6ADFEE, .6) 98%, $white 100%);
+			&:last-child {
+				opacity: .3;
 			}
 		}
 	}
