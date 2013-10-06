@@ -254,7 +254,7 @@
 		$("#bet").on('click', function() {
 			window.console.log("placing a bet");
 			var data = {};
-			data.poser = me.id;
+			data.proposer = me.id;
 			data.p_amount = $("#p_amount").val();
 			data.poser_pic = me.picture;
 			data.acceptor = $("#aUser-dropdown option:selected").attr("id");
