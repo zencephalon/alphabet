@@ -391,6 +391,14 @@
 		    		hr {
 		    			right: 0;
 		    		}
+		    		select {
+		    			width: 100px;
+		    			height: 100px;
+		    			-webkit-appearance: menulist-button;
+		    			right: 0px;
+		    			position: absolute;
+		    			z-index: 100;
+		    		}
 		    	}
 
 		    }
