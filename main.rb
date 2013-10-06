@@ -99,12 +99,11 @@ class AlphabetApp < Sinatra::Base
     end
 
     get '/friends.json' do
+        content_type :json
         if logged_in?
-            uri = "https://api.venmo.com/users/#{session[:user]['id']}/friends?access_token=#{session[:user_token]}"
+            uri = URI.parse("https://api.venmo.com/users/#{session[:user]['id']}/friends?access_token=#{session[:user_token]}&limit=1000")
 
-            response = Net::HTTP.get(uri)
-            response = response.body
-            return response['data'].to_json
+            return Net::HTTP.get(uri)
         else
             return [].to_json
         end
