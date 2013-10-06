@@ -43,12 +43,21 @@
 			}
 		}
 		injectCategories(categories, chosen);
+		showCategoryData(categories[chosen]);
 
 		for (var i = 0; i < categories.length; i++) {
-			$("#"+categories[i]).click(function() {
-				showCategoryData(categories[i]);
+			var catObj = $("#"+categories[i]);
+			catObj.category = categories[i];
+			catObj.on('click', function() {
+				showCategoryData(catObj.category);
 			});
 		}
+
+		$("#bet").on('click', function() {
+			window.console.log("placing a bet");
+			var formData = $('#form').serializeArray();
+			c.post(formData, "bets");
+		});
 	};
 
 	$(function() {
