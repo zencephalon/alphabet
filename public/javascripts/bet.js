@@ -96,8 +96,8 @@
 			data = JSON.stringify(data);
 
 			window.console.dir(data);
-			c.get("bet", "data="+JSON.stringify(data)).done(function() {
-				c.route("main");
+			c.post(data, "bet").done(function() {
+				// c.route("main");
 			});
 		});
 

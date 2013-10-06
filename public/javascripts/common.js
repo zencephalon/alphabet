@@ -27,8 +27,14 @@ window.common = (function ($, document, window) {
 		endpoint = endpoint || "bets";
 		endpoint = url + endpoint;
 		var ret = new $.Deferred();
-		$.post(endpoint, function(data) {
-			ret.resolve(data);
+		$.ajax({
+			url: endpoint,
+			type: 'POST',
+			data: data,
+			success: function(data) {
+				window.console.dir(data);
+				ret.resolve(data);
+			}
 		});
 		return ret.promise();
 	};
