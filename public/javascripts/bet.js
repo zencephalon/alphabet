@@ -49,7 +49,7 @@
 		$("#aUser-dropdown").empty();
 		for (var i = 0; i < friends.length; i++) {
 			$("#aUser-dropdown").append("<option id=" + friends[i].id + " value='" + 
-				friends[i].name + "'>" + friends[i].name + "</option>");
+				friends[i].id + "'>" + friends[i].display_name + "</option>");
 		}
 	};
 
