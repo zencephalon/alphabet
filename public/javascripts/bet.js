@@ -93,8 +93,8 @@
 		getSelfInfo().done(function(data) {
 			me = data;
 			getFriends().done(function(friendList) {
-				friends = friendList;
-				window.console.dir(friends);
+				friends = friendList.data;
+				window.console.dir(friends.data);
 				init();	//	init the page with default category
 			});
 		});
