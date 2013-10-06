@@ -116,6 +116,7 @@
 		sorter = sorter || "all";
 		getFeedItems().done(function(feedItems) {
 			feedItems = feedItems || [];
+			if (feedItems) {
 			getSelfInfo().done(function(data) {
 				me = data;
 				var sorted = sortFeed(feedItems, sorter);
@@ -133,6 +134,11 @@
 					});
 				}
 			});
+			} else {
+				$("#feed").empty();
+				$("#feed").append("<li class='no-items'><h3>Looks like you haven't placed a bet yet, get too it.</h3></li>");
+			}
+
 		});
 	};
 

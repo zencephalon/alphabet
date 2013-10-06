@@ -90,7 +90,6 @@
 		margin: 0px;
 		& > li {
 			position: relative;
-			box-shadow: 1px 1px 4px rgba(50, 50, 50, 0.25);
 			margin: 0px auto;
 			border-radius: 3px;
 			color: darken(#165611, 20%);
@@ -98,6 +97,18 @@
 			box-shadow: 1px 1px 4px rgba(50, 50, 50, 0.25);
 			width: 635px;
 			height: 125px;
+			&.no-items {
+				border: 0px;
+				box-shadow: 0px 0px 0px rgba(0, 0, 0, 0) !important;
+				h3 {
+					font-weight: 400;
+					text-align: center;
+					@include adjust-font-size-to(24px);
+					margin: 0px;
+					color: grey;
+
+				}
+			}
 		}
 
 		p {
