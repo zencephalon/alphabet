@@ -85,7 +85,9 @@ class AlphabetApp < Sinatra::Base
         session[:user_token] = response['access_token']
         session[:user] = response['user']
 
-        puts session
+        File.open("debug","w") do |f|
+            f.puts session
+        end
 
         redirect '/', 303
     end
