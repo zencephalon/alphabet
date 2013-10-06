@@ -52,7 +52,7 @@ window.common = (function ($, document, window) {
 		if(this.isset(uri)) {
 			page += formUri(uri);
 		}
-		window.open(page);
+		window.location = page;
 	};
 
     return common;
