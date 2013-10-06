@@ -3,7 +3,7 @@
 
 	//	Get all types of betting categories
 	var getCategories = function() {
-		var categories = c.get("categories.json") || ["General"];
+		var categories = c.get("categories") || ["General"];
 		return categories || [];
 	};
 
