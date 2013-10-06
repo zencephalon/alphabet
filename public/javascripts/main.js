@@ -204,10 +204,10 @@
 	var showCategoryData = function(cat) {
 		var data = "";
 		if(cat === "general") {
-			data =	"Bet: <input type='text' name='description' id='bet'>";
+			data =	"<textarea name='textarea' name='description' id='bet'>what's yer wager?</textarea>";
 		}
-		$('#form').empty();
-		$("#form").append(data);
+		$('#bet-canvas').empty();
+		$("#bet-canvas").append(data);
 	};
 
 	var injectFriends = function() {
