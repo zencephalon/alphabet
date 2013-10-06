@@ -4,6 +4,8 @@ require 'bundler/setup'
 require 'sinatra'
 require 'mongo'
 
+require 'compass'
+
 class Alphabet < Sinatra::Base
     enable :sessions
     set :bind, '0.0.0.0'
@@ -12,10 +14,9 @@ class Alphabet < Sinatra::Base
     configure do
         Compass.configuration do |config|
             config.project_path = File.dirname(__FILE__)
-            config.sass_dir = 'views'
+            config.sass_path = 'views/stylesheets/'
         end
 
-        set :haml, { :format => :html5 }
         set :sass, Compass.sass_engine_options
         set :scss, Compass.sass_engine_options
     end
@@ -24,9 +25,10 @@ class Alphabet < Sinatra::Base
         sass :sass_file
     end
 
-    get '/scss.css' do
-        scss :scss_file
+    get '/screen.css' do
+         scss(:"stylesheets/screen" )
     end
+
 
     helpers do
         def logged_in?
@@ -58,7 +60,7 @@ class Alphabet < Sinatra::Base
 
     # if logged in CHANGE USING PERMISSIONS
     get '/main' do
-        liquid :bet
+        liquid :main
 
     end
 
