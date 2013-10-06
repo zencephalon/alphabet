@@ -50,6 +50,7 @@
 		for (var i = 0; i < friends.length; i++) {
 			$("#aUser-dropdown").append("<option id=" + friends[i].id + " value='" + 
 				friends[i].id + "'>" + friends[i].display_name + "</option>");
+			$("#"+friends[i].id).pic = friends[i].picture;
 		}
 	};
 
@@ -83,14 +84,16 @@
 
 		$("#bet").on('click', function() {
 			window.console.log("placing a bet");
-			var pUser = $("#pUser").val();
-			var aUser = $("#aUser-dropdown option:selected").text();
-			var pAmount = $("#p_amount").val();
-			var aAmount = $("#a_amount").val();
-			var description = $("#bet").val();
+			var data = {};
+			data.pUser = me.id;
+			data.pAmount = $("#p_amount").val();
+			data.pPic = me.picture;
+			data.aUser = $("#aUser-dropdown option:selected").value();
+			data.aAmount = $("#a_amount").val();
+			data.aPic = ("#aUser-dropdown option:selected").picture;
+			data.description = $("#bet").val();
 
-			var formData = $('#form').serializeArray();
-			c.post(formData, "bet").done(function() {
+			c.post(data, "bet").done(function() {
 				c.route("main");
 			});
 		});
