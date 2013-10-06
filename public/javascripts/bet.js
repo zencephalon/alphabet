@@ -57,6 +57,7 @@
 			window.console.log("placing a bet");
 			var formData = $('#form').serializeArray();
 			c.post(formData, "bets");
+			c.route("main");
 		});
 	};
 

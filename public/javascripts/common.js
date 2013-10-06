@@ -51,7 +51,7 @@ window.common = (function ($, document, window) {
 	common.route = function(page, uri) {
 		uri = uri || "";
 		page = page || "index";
-		page = "/" + page + ".html";
+		page = "/" + page;
 		if(this.isset(uri)) {
 			page += formUri(uri);
 		}
