@@ -9,5 +9,6 @@ class Alphabet
         @client = client
         @db = @client.db('alphabet')
         @bet_m = Bets::BetManager.new(self)
+        @user_m = Bets::UserManager.new(self)
     end
 end
