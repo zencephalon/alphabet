@@ -58,6 +58,7 @@
 		sorter = sorter || DEFAULT_CATEGORY;
 		injectFriends();
 		$("#pImage").attr("src", me.picture); 
+		$("#aImage").attr("src", $("#aUser-dropdown option:selected").val()); 
 		getCategories().done(function(categories) {
 			categories = ["general"];
 			var chosen = 0;
