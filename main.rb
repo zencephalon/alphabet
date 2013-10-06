@@ -73,6 +73,11 @@ class AlphabetApp < Sinatra::Base
         redirect 'https://api.venmo.com/oauth/authorize?client_id=1431&scope=ACCESS_FRIENDS,ACCESS_PROFILE,MAKE_PAYMENTS', 303
     end
 
+    get '/venmo_login' do
+        session[:access_token] = params[:access_token]
+        redirect '/', 303
+    end
+
     get '/logout' do
 
     end
