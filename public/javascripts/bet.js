@@ -82,7 +82,7 @@
 	};
 
 	$(function() {
-		getSelfInfo(function(data) {
+		getSelfInfo().done(function(data) {
 			me = data;
 			getFriends().done(function(friendList) {
 				friends = friendList;
