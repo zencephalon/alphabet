@@ -81,7 +81,12 @@ class AlphabetApp < Sinatra::Base
     end
 
     post '/bet' do
-        # create the bet
+        opt_hash = {}
+        ['description', 'proposer', 'acceptor', 'arbiter', 'p_amount', 'a_amount'].each do |key|
+            opt_hash[key] = params[key]
+        end
+
+        $bet_m.create(opt_hash)
     end
 
     delete '/bet' do
