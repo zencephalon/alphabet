@@ -38,7 +38,7 @@ class Alphabet < Sinatra::Base
     end
 
     # if logged in CHANGE USING PERMISSIONS
-    get '/logged-in' do
+    get '/main' do
         liquid :bet
 
     end
