@@ -69,8 +69,8 @@
 			}
 		});
 
-		// var nemesis = null;
-		// $("#pUser").append(me.name);
+		// var nemesis = {name: "test"};
+		$("#pUser").append(me.name);
 		// $("#aUser").append(nemesis.name);
 
 		$("#bet").on('click', function() {
