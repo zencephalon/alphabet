@@ -265,14 +265,14 @@
 			data.arbiter = 1;
 			data.description = $("#bet").val();
 
-			$.each(friends, function(index, val) {
-				if(friends[index].id == data.proposer) {
-					data.proposer_name = friends[index].display_name;
+			for (var i = 0; i < Things.length; i++) {
+				if(friends[i].id == data.proposer) {
+					data.proposer_name = friends[i].display_name;
 				}
-				else if(friends[index].id == data.acceptor) {
-					data.acceptor_name = friends[index].display_name;
+				else if(friends[i].id == data.acceptor) {
+					data.acceptor_name = friends[i].display_name;
 				}
-			});
+			}
 
 			data = JSON.stringify(data);
 
