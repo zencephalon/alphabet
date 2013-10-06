@@ -21,6 +21,23 @@ class AlphabetApp < Sinatra::Base
     $alphabet = Alphabet.new(Mongo::MongoClient.new('localhost', 27017))
     $bet_m = $alphabet.bet_m
 
+    # ============ Helpers ==================
+    helpers do
+        def logged_in?
+            !session[:user].nil?
+        end
+
+        def user
+            session[:user]
+        end
+    end
+
+    set(:auth) do |roles|
+        condition do
+            redirect '/login', 303 unless logged_in?
+        end
+    end
+
     # ============== Main Site Routs ============
     get '/' do
         liquid :index
@@ -130,23 +147,6 @@ class AlphabetApp < Sinatra::Base
 
     get '/screen.css' do
          scss(:"stylesheets/screen" )
-    end
-
-    # ============ Helpers ==================
-    helpers do
-        def logged_in?
-            !session[:user].nil?
-        end
-
-        def user
-            session[:user]
-        end
-    end
-
-    set(:auth) do |roles|
-        condition do
-            redirect '/login', 303 unless logged_in?
-        end
     end
 end
 
