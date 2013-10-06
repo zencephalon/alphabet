@@ -27,20 +27,19 @@ window.common = (function ($, document, window) {
 		endpoint = endpoint || "bets";
 		endpoint = url + endpoint;
 		var ret = new $.Deferred();
-		$.post(endpoint, data, function(data) {
-			ret.resolve(data);
-		});
 		$.ajax({
-			type: "POST",
 			url: endpoint,
-			data: data
-		}).done(function(data) {
-			ret.resolve(data);
-		}); 
+			type: 'POST',
+			data: data,
+			success: function(data) {
+				window.console.dir(data);
+				ret.resolve(data);
+			}
+		});
 		return ret.promise();
 	};
 
-	common.get = function(endpoint) {
+	common.get = function(endpoint, data) {
 		endpoint = endpoint || "bets";
 		endpoint = url + endpoint + ".json";
 		var ret = new $.Deferred();
