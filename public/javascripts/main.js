@@ -11,6 +11,11 @@
 		//	p_amount: 300, a_amount: 800, description: "is the sky falling?", id: 2 }];
 	};
 
+	//	Get one user's info
+	var getUserInfo = function(userId) {
+		return c.get("user", "?id="+userId);
+	};
+
 	//	Get my information from Venmo or login process.
 	var getSelfInfo = function() {
 		return c.get("me");
@@ -53,23 +58,37 @@
 	//	Form a feed item from one listing object
 	var formFeedItem = function(item) {
 
-			
-		var pLi =	"<li style='display: inline-block;'>"				+
-						"<img src='http://placehold.it/50x50'/>"		+
-						"<p>" + item.proposer + "(amount: <b>" + item.p_amount + "</b>)</p>" +
-					"</li>";
-		var aLi =	"<li style='display: inline-block;'>"				+
-						"<img src='http://placehold.it/50x50'/>"		+
-						"<p>" + item.acceptor + "(amount: <b>" + item.a_amount + "</b>)</p>" +
-					"</li>";
 		var itemId = "item-"+item.id;
-		var display =	"<li id=" + itemId+ ">"		+
-						"<p><a href='#'>" + item.description + "</a></p>"	+ 
-						"<ul>"		+
-							pLi		+
-							aLi		+
-						"</ul>"		+
-						"<hr />"	+
+		var winnings = 0;
+		var losses = 0;
+		var nemesis = "";
+		var nemesisImage = "http://placehold.it/24x24";
+
+		if(item.proposer === me.id) {	//	I am the proposer
+			winnings = item.a_amount;
+			losses = item.p_amount;
+			nemesis = item.acceptor_name;
+			nemesisImage = item.acceptor_image;
+		}
+		else if(item.acceptor === me.id) {	//	I am the acceptor
+			winnings = item.p_amount;
+			losses = item.a_amount;
+			nemesis = item.proposer_name;
+			nemesisImage = item.proposer_image;
+		}
+		else {	//	I am the arbiter
+			nemesis = "Neutral";
+		}
+
+		var display =	"<li id=" + itemId + ">" 	+
+							"<div class='amount'>"	+
+							"<div class='win'><span class='condensed'> + </span>$" + winnings + "</div>"	+
+							"<div class='lose'><span class='condensed'> - </span>$" + losses + "</div>"		+
+							"</div>"			+
+							"<p>" + item.description + "</p>"	+
+							"<div class='person'>"		+
+								"<img src=" + nemesisImage + " /> <p>" + nemesis + "</p>" +
+							"</div>" +
 						"</li>";
 
 		return display;
