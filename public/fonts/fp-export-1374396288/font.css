@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'AvenirNext LT Pro Cn';
+  src: url('AvenirNextLTPro-Cn.eot'); /* IE9 Compat Modes */
+  src: url('AvenirNextLTPro-Cn.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('AvenirNextLTPro-Cn.woff') format('woff'), /* Modern Browsers */
+       url('AvenirNextLTPro-Cn.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('AvenirNextLTPro-Cn.svg#svg') format('svg'); /* Legacy iOS */
+       
+  font-style:   normal;
+  font-weight:  400;
+}
+

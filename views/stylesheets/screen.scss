@@ -1,0 +1,26 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass";
+@import "compass/css3";
+@import "compass/reset";
+@import "clearfix";
+
+/* colors */
+$black: #1D2114;
+$white: #FFFFFF;
+$red: #FF271C;
+$green: #C8F576;
+$blue: #0063FE;
+
+
+@import "fonts/font.css";
+@import "home.scss";
+
+body {
+	font-family: 'AvenirNext LT Pro';
+	font-weight: 300;
+	padding-top: 70px;
+}
