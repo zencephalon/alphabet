@@ -3,6 +3,7 @@ require 'bundler/setup'
 
 require 'sinatra'
 require 'mongo'
+require 'json'
 
 class Alphabet < Sinatra::Base
     enable :sessions
@@ -46,6 +47,13 @@ class Alphabet < Sinatra::Base
 
     get '/' do
         liquid :index
+    end
+
+    get '/feed.json' do
+        content_type :json
+
+        bets = $bet_m.get_all
+        bets.to_json
     end
 
     get '/login' do
