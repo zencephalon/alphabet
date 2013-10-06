@@ -71,7 +71,7 @@ class AlphabetApp < Sinatra::Base
         return (bet ? bet : []).to_json
     end
 
-    get '/bet' do
+    post '/bet' do
         File.open("debug2","w") do |f|
             f.puts params
         end
