@@ -73,20 +73,37 @@ class AlphabetApp < Sinatra::Base
     end
 
     get '/login' do
-        redirect 'https://api.venmo.com/oauth/authorize?client_id=1431&scope=ACCESS_FRIENDS,ACCESS_PROFILE,MAKE_PAYMENTS', 303
+        redirect 'https://api.venmo.com/oauth/authorize?client_id=1431&scope=ACCESS_FRIENDS,ACCESS_PROFILE,MAKE_PAYMENTS&response_type=code', 303
+    end
+
+    post '/bet/resolve' do
+        # take bet id and winner name
+    end
+
+    post '/bet' do
+        # create the bet
+    end
+
+    delete '/bet' do
+        # delete a bet
     end
 
     get '/venmo_login' do
-        session[:access_token] = params[:access_token]
+        session[:access_code] = params[:code]
         
         uri = URI.parse('https://api.venmo.com/oauth/access_token')
-        response = Net::HTTP.post_form(uri, {'client_id' => 1431, 'client_secret' => Secrets::CLIENT_SECRET, 'code' => session[:access_token]})
+        response = Net::HTTP.post_form(uri, {'client_id' => 1431, 'client_secret' => Secrets::CLIENT_SECRET, 'code' => session[:access_code]})
 
+        response = response.body
         session[:user_token] = response['access_token']
         session[:user] = response['user']
 
         File.open("debug","w") do |f|
-            f.puts session
+            f.puts Secrets::CLIENT_SECRET
+            f.puts session[:access_code]
+            f.puts response
+            f.puts "-------------"
+            f.puts session[:user]
         end
 
         redirect '/', 303
