@@ -4,8 +4,8 @@ require 'mongo'
 require_relative './alphabet/alphabet'
 
 mongo_client = Mongo::MongoClient.new('localhost', 27017)
-tekstflyt = Alphabet.new(Mongo::MongoClient.new('localhost', 27017))
-bet_m = Alphabet.bet_m
+alphabet = Alphabet.new(Mongo::MongoClient.new('localhost', 27017))
+bet_m = alphabet.bet_m
 
 task :clean do |t|
     mongo client.drop_database('alphabet')

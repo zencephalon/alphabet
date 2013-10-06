@@ -7,10 +7,15 @@ require 'json'
 
 require 'compass'
 
-class Alphabet < Sinatra::Base
+require_relative './alphabet/alphabet'
+
+class AlphabetApp < Sinatra::Base
     enable :sessions
     set :bind, '0.0.0.0'
     set :port, 1111
+
+    $alphabet = Alphabet.new(Mongo::MongoClient.new('localhost', 27017))
+    $bet_m = $alphabet.bet_m
 
     configure do
         Compass.configuration do |config|
@@ -87,5 +92,5 @@ class Alphabet < Sinatra::Base
 end
 
 if __FILE__ == $0
-    Alphabet.run!
+    AlphabetApp.run!
 end
