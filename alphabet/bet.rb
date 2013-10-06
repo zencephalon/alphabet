@@ -16,4 +16,15 @@ module Bets
         include Mongo
         ruby_to_mongo = RUBY_TO_MONGO
     end
+
+    class BetManager
+        def initialize(alphabet)
+            @alphabet = alphabet
+            @bet_db = alphabet.db.collection('bets')
+        end
+
+        def mongo_to_ruby(mongo_obj)
+            bet = Bet.new
+        end
+    end
 end
