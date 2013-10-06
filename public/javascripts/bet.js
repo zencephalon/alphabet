@@ -2,11 +2,17 @@
 "use strict";
 
 	var DEFAULT_CATEGORY = "general";
+	var me = [];
 
 	//	Get all types of betting categories
 	var getCategories = function() {
 		return c.get("categories");
 
+	};
+
+	//	Get my information from Venmo or login process.
+	var getSelfInfo = function() {
+		return c.get("me");
 	};
 
 	//	Inject categories into the page
@@ -27,7 +33,7 @@
 	var showCategoryData = function(cat) {
 		var data = "";
 		if(cat === "general") {
-			data =	"Bet: <input type='text' name='bet' id='bet'>";
+			data =	"Bet: <input type='text' name='description' id='bet'>";
 		}
 		$('#form').empty();
 		$("#form").append(data);
@@ -56,16 +62,23 @@
 			}
 		});
 
+		var nemesis = getNemesis();
+		$("#pUser").append(me.name);
+		$("#aUser").append(nemesis.name);
+
 		$("#bet").on('click', function() {
 			window.console.log("placing a bet");
 			var formData = $('#form').serializeArray();
-			c.post(formData, "bets");
+			c.post(formData, "bet");
 			c.route("main");
 		});
 	};
 
 	$(function() {
-		init();	//	init the page with default category
+		getSelfInfo(function(data) {
+			me = data;
+			init();	//	init the page with default category
+		});
 	});
 
 
