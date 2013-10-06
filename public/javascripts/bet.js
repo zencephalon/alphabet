@@ -93,7 +93,7 @@
 			data.aPic = $("#aUser-dropdown option:selected").pic;
 			data.description = $("#bet").val();
 
-			data = JSON.serialize(data);
+			data = JSON.stringify(data);
 
 			window.console.dir(data);
 			c.post(data, "bet").done(function() {
