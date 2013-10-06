@@ -90,13 +90,18 @@
 			data.pPic = me.picture;
 			data.aUser = $("#aUser-dropdown option:selected").val();
 			data.aAmount = $("#a_amount").val();
-			data.aPic = ("#aUser-dropdown option:selected").pic;
+			data.aPic = $("#aUser-dropdown option:selected").pic;
 			data.description = $("#bet").val();
 
 			window.console.dir(data);
 			c.post(data, "bet").done(function() {
 				c.route("main");
 			});
+		});
+
+		$("#aUser-dropdown").change(function() {
+			var sel = $(this).val();
+			$("#aImage").attr("src", sel.pic); 
 		});
 	};
 
