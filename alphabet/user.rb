@@ -31,7 +31,7 @@ module Users
             begin
                 @user_db.insert(mongo_obj)
             rescue Mongo::OperationFailure => e
-                user = @user_db.get(opt_hash['_id'])
+                user = get(opt_hash['_id'])
             end
 
             return user

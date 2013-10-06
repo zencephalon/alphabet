@@ -63,11 +63,11 @@ module Bets
                 proposer = @user_m.get(p)
 
                 # the proposer won the bet, he makes a charge
-           #     if p == user_id
-           #         uri = URI.parse("https://api.venmo.com/payments
-           #     else
+               # if p == user_id
+               #     uri = URI.parse("https://api.venmo.com/payments
+               # else
 
-           #     end
+               # end
 
             end
         end
