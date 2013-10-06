@@ -90,7 +90,7 @@
 			data.pPic = me.picture;
 			data.aUser = $("#aUser-dropdown option:selected").attr("id");
 			data.aAmount = $("#a_amount").val();
-			data.aPic = $("#aUser-dropdown option:selected").pic;
+			data.aPic = $("#aUser-dropdown option:selected").val();
 			data.description = $("#bet").val();
 
 			data = JSON.stringify(data);
