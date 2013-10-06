@@ -45,6 +45,13 @@
 		$("#form").append(data);
 	};
 
+	var injectFriends = function() {
+		$("#aUser-dropdown").empty();
+		for (var i = 0; i < friends.length; i++) {
+			$("#aUser-dropdown").append("<option id=" + friends[i].id + " value='" + 
+				friends[i].name + "'>" + friends[i].name + " </option>");
+		}
+	};
 
 	//	Inject the category options, select a default, and setup on click events.
 	var init = function(sorter) {
