@@ -64,13 +64,13 @@
 		var nemesis = "";
 		var nemesisImage = "http://placehold.it/24x24";
 
-		if(item.proposer === me.id) {	//	I am the proposer
+		if(item.proposer == me.id) {	//	I am the proposer
 			winnings = item.a_amount;
 			losses = item.p_amount;
 			nemesis = item.acceptor_name;
 			nemesisImage = item.acceptor_image;
 		}
-		else if(item.acceptor === me.id) {	//	I am the acceptor
+		else if(item.acceptor == me.id) {	//	I am the acceptor
 			winnings = item.p_amount;
 			losses = item.a_amount;
 			nemesis = item.proposer_name;
