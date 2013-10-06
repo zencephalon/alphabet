@@ -3,11 +3,31 @@ require 'bundler/setup'
 
 require 'sinatra'
 require 'mongo'
+require 'json'
 
 class Alphabet < Sinatra::Base
     enable :sessions
     set :bind, '0.0.0.0'
     set :port, 1111
+
+    configure do
+        Compass.configuration do |config|
+            config.project_path = File.dirname(__FILE__)
+            config.sass_dir = 'views'
+        end
+
+        set :haml, { :format => :html5 }
+        set :sass, Compass.sass_engine_options
+        set :scss, Compass.sass_engine_options
+    end
+
+    get '/sass.css' do
+        sass :sass_file
+    end
+
+    get '/scss.css' do
+        scss :scss_file
+    end
 
     helpers do
         def logged_in?
@@ -27,6 +47,13 @@ class Alphabet < Sinatra::Base
 
     get '/' do
         liquid :index
+    end
+
+    get '/feed.json' do
+        content_type :json
+
+        bets = $bet_m.get_all
+        bets.to_json
     end
 
     get '/login' do
