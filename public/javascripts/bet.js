@@ -1,8 +1,6 @@
 (function(window, document, $, c) {
 "use strict";
 
-	
-
 	//	Get all types of betting categories
 	var getCategories = function() {
 		var categories = c.get("categories.json") || ["General"];
@@ -19,15 +17,18 @@
 			display += "</li>";
 		}
 
-		$("#categories").clear();
+		$("#categories").empty();
 		$("#categories").append(display);
 	};
 
 	//	Display data for a specific category
 	var showCategoryData = function(cat) {
+		var data = "";
 		if(cat === "General") {
-			
+			data =	"Bet: <input type='text' name='bet' id='bet'>";
 		}
+		$('#form').empty();
+		$("#form").append(data);
 	};
 
 
