@@ -1,4 +1,5 @@
 require_relative './mongo'
+require 'open-uri'
 
 module Bets
     RUBY_TO_MONGO = {_id: :_id,
@@ -62,13 +63,18 @@ module Bets
                 p = bet.proposer
                 proposer = @user_m.get(p)
 
+                uri = URI.parse("https://api.venmo.com/payments")
                 # the proposer won the bet, he makes a charge
-               # if p == user_id
-               #     uri = URI.parse("https://api.venmo.com/payments
-               # else
+                if p == user_id
+                    amount = -1 * (a_amount/100).round(2)
+                    note = URI::encode("You lost the bet '#{bet.description}' to #{bet.proposer_name} for $#{amount}")
+                # the proposer lost the bet, he makes a payment
+                else
+                    amount = (p_amount/100).round(2)
+                    note = URI::encode("You won the bet '#{bet.description}' for $#{amount} from #{bet.proposer_name}")
+                end
 
-               # end
-
+                return JSON.parse(Net::HTTP.post_form(uri, {'note' => note, 'access_token' => proposer.token, 'amount' => -amount, 'user_id' => bet.acceptor}))
             end
         end
 
