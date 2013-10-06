@@ -41,11 +41,11 @@
 				text-align: center;
 				border-radius: 3px;
 				color: darken(#165611, 20%);
-				border: 1px solid darken(#165611, 20%);
+				border: 1px solid lighten(#252429, 30%);
 				box-shadow: 1px 1px 4px rgba(50, 50, 50, 0.25);
 				h4 {
 					@include adjust-font-size-to(24px);
-					border-top: 1px solid lighten(#252429, 40%);
+					border-top: 1px solid lighten(#252429, 70%);
 					margin: 0px 0px 0px;
 					font-weight: 300;
 				}
@@ -82,17 +82,19 @@
 			margin: 0px auto;
 			border-radius: 3px;
 			color: darken(#165611, 20%);
-			border: 1px solid darken(#165611, 20%);
+			border: 1px solid lighten(#252429, 30%);
+			box-shadow: 1px 1px 4px rgba(50, 50, 50, 0.25);
 			width: 635px;
 			height: 125px;
 		}
 
 		p {
-			width: 485px;
+			width: 507px;
 			float: left;
-			margin: 10px;
+			margin: 0px;
+			padding: 20px 25px;
 			font-weight: 300;
-			@include adjust-font-size-to(24px);
+			@include adjust-font-size-to(19px);
 		}
 		.amount {
 			width: 125px;
@@ -104,7 +106,7 @@
 			.win {
 				height: 55%;
 				text-align: center;
-				border-bottom: 1px solid lighten(#252429, 40%);
+				border-bottom: 1px solid lighten(#252429, 70%);
 				color: #2CAC21;
 				@include adjust-font-size-to(38px);
 				font-weight: 500;
