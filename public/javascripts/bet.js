@@ -88,7 +88,7 @@
 			data.pUser = me.id;
 			data.pAmount = $("#p_amount").val();
 			data.pPic = me.picture;
-			data.aUser = $("#aUser-dropdown option:selected").value();
+			data.aUser = $("#aUser-dropdown option:selected").val();
 			data.aAmount = $("#a_amount").val();
 			data.aPic = ("#aUser-dropdown option:selected").picture;
 			data.description = $("#bet").val();
