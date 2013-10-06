@@ -63,8 +63,14 @@ class AlphabetApp < Sinatra::Base
         bets.to_json
     end
 
+    get '/categories.json' do
+        content_type :json
+
+        ['general'].to_json
+    end
+
     get '/login' do
-        liquid :login
+        redirect 'https://api.venmo.com/oauth/authorize?client_id=1431&scope=ACCESS_FRIENDS,ACCESS_PROFILE,MAKE_PAYMENTS', 303
     end
 
     get '/logout' do
