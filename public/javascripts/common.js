@@ -44,6 +44,22 @@ window.common = (function ($, document, window) {
 		return ret.promise();
 	};
 
+	common.delete = function (endpoint, data) {
+		endpoint = endpoint || "bets";
+		endpoint = url + endpoint + ".json";
+		var ret = new $.Deferred();
+		$.ajax({
+			url: endpoint,
+			type: 'DELETE',
+			data: data,
+			success: function(data) {
+				window.console.dir(data);
+				ret.resolve(data);
+			}
+		});
+		return ret.promise();
+	};
+
 	//	Redirect to new page
 	common.route = function(page, uri) {
 		uri = uri || "";

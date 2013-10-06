@@ -24,7 +24,7 @@
 		var tempList = [];
 		if(sorter === "self") {	//	Bets I'm a part of first
 			for (var i = 0; i < feedItems.length; i++) {
-				if(feedItems[i]["proposer"] === me["username"] || feedItems[i]["acceptor"] === me["username"]) {
+				if(feedItems[i]["proposer"] === me.username || feedItems[i]["acceptor"] === me.username) {
 					sortedList.append(feedItems[i]);
 				}
 				else {
@@ -35,7 +35,7 @@
 		}
 		else if(sorter === "judge") {	//	Items I'm judging first
 			for (var i = 0; i < feedItems.length; i++) {
-				if(feedItems[i]["arbiter"] === me["username"]) {
+				if(feedItems[i]["arbiter"] === me.username) {
 					sortedList.append(feedItems[i]);
 				}
 				else {
@@ -108,8 +108,16 @@
 	var judgeBet = function(data) {
 		var sel = {};
 		sel.betId = data.bet.id;
-		sel.winnerId = data.winner.id;
-		c.post(sel, "bets/resolve");
+		sel.userId = data.user.id;
+		c.post(sel, "bet/resolve");
+	};
+
+	//	Cancel a bet
+	var cancelBet = function(data) {
+		var sel = {};
+		sel.betId = data.bet.id;
+		sel.userId = data.user.id;
+		c.post(sel, "bet");
 	};
 
 	$(function() {
