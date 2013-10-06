@@ -4,7 +4,7 @@ require_relative 'bet'
 require_relative 'user'
 
 class Alphabet
-    attr_reader :db, :bet_m
+    attr_reader :db, :bet_m, :user_m
 
     def initialize(client)
         @client = client
