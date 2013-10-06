@@ -3,12 +3,11 @@
 
 	//	Request all the feed items to display, sorted clientside
 	var getFeedItems = function() {
-		var feedItems = c.get("feed");
-		return feedItems || [];
+		return c.get("feed");
 		// return [{proposer: "joe", acceptor: "jill", arbiter: "lauren", 
-		// 	p_amount: 100, a_amount: 50, description: "how quickly will venmo shut this down?", id: 1 },
-		// 	{proposer: "kate", acceptor: "vick", arbiter: "lauren", 
-		// 	p_amount: 300, a_amount: 800, description: "is the sky falling?", id: 2 }];
+		//	p_amount: 100, a_amount: 50, description: "how quickly will venmo shut this down?", id: 1 },
+		//	{proposer: "kate", acceptor: "vick", arbiter: "lauren", 
+		//	p_amount: 300, a_amount: 800, description: "is the sky falling?", id: 2 }];
 	};
 
 	//	Get my information from Venmo or login process.
@@ -84,15 +83,16 @@
 	//	Prepare and display the sorted feed items
 	var init = function(sorter) {
 		sorter = sorter || "all";
-		var feedItems = getFeedItems();
-		var sorted = sortFeed(feedItems, sorter);
-		$("#feed").empty();
-		
-		$("#feed").append("<hr />");
-		for (var i = 0; i < sorted.length; i++) {
-			var item = formFeedItem(sorted[i]);
-			$("#feed").append(item);
-		}
+		getFeedItems().done(function(feedItems) {
+			feedItems = feedItems || [];
+			var sorted = sortFeed(feedItems, sorter);
+			$("#feed").empty();
+			$("#feed").append("<hr />");
+			for (var i = 0; i < sorted.length; i++) {
+				var item = formFeedItem(sorted[i]);
+				$("#feed").append(item);
+			}
+		});
 	};
 
 	$(function() {
