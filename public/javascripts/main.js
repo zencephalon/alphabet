@@ -53,6 +53,7 @@
 	//	Form a feed item from one listing object
 	var formFeedItem = function(item) {
 
+			
 		var pLi =	"<li style='display: inline-block;'>"				+
 						"<img src='http://placehold.it/50x50'/>"		+
 						"<p>" + item.proposer + "(amount: <b>" + item.p_amount + "</b>)</p>" +
@@ -76,7 +77,7 @@
 
 	//	Start a new bet
 	var makeBet = function() {
-		c.route("bet");
+		c.route("bets");
 	};
 
 	//	Prepare and display the sorted feed items
@@ -87,7 +88,7 @@
 			getSelfInfo().done(function(data) {
 				me = data;
 				var sorted = sortFeed(feedItems, sorter);
-				$("#feed").empty();
+				// $("#feed").empty();
 				$("#feed").append("<hr />");
 				for (var i = 0; i < sorted.length; i++) {
 					var item = formFeedItem(sorted[i]);
