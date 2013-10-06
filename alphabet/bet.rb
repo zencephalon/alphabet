@@ -10,6 +10,7 @@ module Bets
                      a_amount: :aa, # amount wagered by aceptor in cents (int)
                      type: :t,      # type of bet (string)
                      condition: :c, # condition for auto-arb bets (object ref)
+                     resolved: :r,
     }
     MONGO_TO_RUBY = RUBY_TO_MONGO.invert.freeze
 
@@ -45,6 +46,13 @@ module Bets
             @bet_db.insert(mongo_obj)
 
             return bet
+        end
+
+        def resolve(id, user_id)
+            bet = get(id)
+            if bet
+                bet.resolved = user_id
+            end
         end
 
         def get_all()
