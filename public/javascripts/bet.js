@@ -68,9 +68,9 @@
 			}
 		});
 
-		var nemesis = null;
-		$("#pUser").append(me.name);
-		$("#aUser").append(nemesis.name);
+		// var nemesis = null;
+		// $("#pUser").append(me.name);
+		// $("#aUser").append(nemesis.name);
 
 		$("#bet").on('click', function() {
 			window.console.log("placing a bet");
