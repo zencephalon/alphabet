@@ -36,4 +36,16 @@ class Alphabet < Sinatra::Base
     get '/logout' do
 
     end
+
+    not_found do
+        liquid :fourohfour, layout: false
+    end
+
+    error do
+        liquid :fivehundred, layout: false
+    end
+end
+
+if __FILE__ == $0
+    Alphabet.run!
 end
