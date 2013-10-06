@@ -58,6 +58,7 @@
 	var init = function(sorter) {
 		sorter = sorter || DEFAULT_CATEGORY;
 		injectFriends();
+		$("#pImage").attr("src", me.picture); 
 		getCategories().done(function(categories) {
 			categories = ["general"];
 			var chosen = 0;
