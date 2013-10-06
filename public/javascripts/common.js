@@ -28,7 +28,7 @@ window.common = (function ($, document, window) {
 
 	common.post = function(data, endpoint) {
 		endpoint = endpoint || "bets";
-		enpoint = url + endpoint;
+		endpoint = url + endpoint;
 		$.post(endpoint, function(data) {
 			// $( ".result" ).html( data );
 			window.console.dir(data);
@@ -37,7 +37,7 @@ window.common = (function ($, document, window) {
 
 	common.get = function(endpoint) {
 		endpoint = endpoint || "bets";
-		enpoint = url + endpoint + ".json";
+		endpoint = url + endpoint + ".json";
 		$.getJSON(endpoint, function(data) {
 			window.console.dir(data);
 		});
