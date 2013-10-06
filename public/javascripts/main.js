@@ -57,6 +57,7 @@
 
 	//	Form a feed item from one listing object
 	var formFeedItem = function(item) {
+		console.dir(item);
 
 		var itemId = "item-"+item.id;
 		var winnings = 0;
@@ -266,7 +267,7 @@
 
 			window.console.dir(data);
 			c.post(data, "bet").done(function() {
-				// c.route("main");
+				c.route("main");
 			});
 		});
 
