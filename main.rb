@@ -20,6 +20,7 @@ class AlphabetApp < Sinatra::Base
 
     $alphabet = Alphabet.new(Mongo::MongoClient.new('localhost', 27017))
     $bet_m = $alphabet.bet_m
+    $user_m = $alphabet.user_m
 
     # ============ Helpers ==================
     helpers do
@@ -126,7 +127,9 @@ class AlphabetApp < Sinatra::Base
         response = JSON.parse(Net::HTTP.post_form(uri, {'client_id' => 1431, 'client_secret' => Secrets::CLIENT_SECRET, 'code' => session[:access_code]}).body)
 
         session[:user_token] = response['access_token']
-        session[:user] = response["user"]
+        session[:user] = response['user']
+
+        $user_m.create({_id: session[:user]['id'], token: session[:user_token]})
 
         redirect '/main', 303
     end

@@ -20,6 +20,18 @@ module Users
             @user_db = alphabet.db.collection('users')
         end
 
+        def create(opt_hash)
+            user = User.new
+            opt_hash.each do |opt, val|
+                user[opt] = val
+            end
+
+            mongo_obj = user.to_mongo
+            @user_db.insert(mongo_obj)
+
+            return user
+        end
+
         def get(id)
             user = @user_db.find_one({_id: id})
             return user ? mongo_to_ruby(user) : nil
