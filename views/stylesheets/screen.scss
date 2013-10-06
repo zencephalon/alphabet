@@ -1,12 +1,11 @@
-/* Welcome to Compass.
- * In this file you should write your main styles. (or centralize your imports)
- * Import this file using the following HTML or equivalent:
- * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-
 @import "compass";
 @import "compass/css3";
 @import "normalize";
 @import "clearfix";
+
+
+@import "http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css";
+
 
 /* colors */
 $black: #1D2114;
@@ -17,10 +16,44 @@ $blue: #0063FE;
 
 
 @import "/fonts/font.css";
+@import "/fonts/icomoon/style.css";
 @import "home.scss";
+
+/* vertical rythm goodness */
+$base-font-size: 16px;
+$base-line-height: 24px;
+@include establish-baseline;
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; 
+}
 
 body {
 	font-family: 'AvenirNext LT Pro';
 	font-weight: 300;
 	padding-top: 70px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 600;
+}
+
+
+.icon-shake-alt, .icon-shake-diff {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+.icon-shake-alt:before {
+	content: "\e001";
+}
+.icon-shake-diff:before {
+	content: "\e000";
 }
