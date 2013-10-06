@@ -63,7 +63,6 @@
 					"</li>";
 
 		var display =	"<li>"		+
-						"<li>"		+
 						"<p><a href='#'>" + item.description + "</a></p>"	+ 
 						"<ul>"		+
 							pLi		+
