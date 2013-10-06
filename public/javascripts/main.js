@@ -86,7 +86,7 @@
 		sorter = sorter || "all";
 		var feedItems = getFeedItems();
 		var sorted = sortFeed(feedItems, sorter);
-		$("#feed").clear();
+		$("#feed").empty();
 		
 		$("#feed").append("<hr />");
 		for (var i = 0; i < sorted.length; i++) {
