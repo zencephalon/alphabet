@@ -8,6 +8,7 @@ require 'json'
 require 'compass'
 
 require_relative './alphabet/alphabet'
+require_relative './secrets'
 
 class AlphabetApp < Sinatra::Base
     enable :sessions
@@ -75,6 +76,15 @@ class AlphabetApp < Sinatra::Base
 
     get '/venmo_login' do
         session[:access_token] = params[:access_token]
+        
+        uri = URI.parse('https://api.venmo.com/oauth/access_token')
+        response = Net::HTTP.post_form(uri, {'client_id': 1431, 'client_secret': Secrets::CLIENT_SECRET, 'code': session[:access_token]})
+
+        session[:user_token] = response['access_token']
+        session[:user] = response['user']
+
+        puts session
+
         redirect '/', 303
     end
 
