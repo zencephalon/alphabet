@@ -88,7 +88,7 @@ class AlphabetApp < Sinatra::Base
         # delete a bet
     end
 
-    get '/me' do
+    get '/me.json' do
         content_type :json
 
         if logged_in?
