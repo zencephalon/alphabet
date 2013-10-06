@@ -179,7 +179,6 @@
 //							BET FUNCTIONS
 
 	var DEFAULT_CATEGORY = "general";
-	var me = [];
 	var friends = [];
 
 	//	Get all types of betting categories
