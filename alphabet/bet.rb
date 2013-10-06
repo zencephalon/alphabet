@@ -3,9 +3,12 @@ require_relative './mongo'
 module Bets
     RUBY_TO_MONGO = {_id: :_id,
                      description: :d, # description of the bet (string)
-                     proposer: :p,  # proposer of the bet (string)
-                     acceptor: :a,  # acceptor of the bet (string)
-                     arbiter: :rb,  # arbiter of the bet (string optional)
+                     proposer: :p,  # proposer of the bet id (string)
+                     acceptor: :a,  # acceptor of the bet id (string)
+                     arbiter: :rb,  # arbiter of the bet id (string optional)
+                     proposer_name: :pn,
+                     acceptor_name: :an,
+                     arbiter_name: :rbn,
                      p_amount: :pa, # amount wagered by proposer in cents (int)
                      a_amount: :aa, # amount wagered by aceptor in cents (int)
                      type: :t,      # type of bet (string)
