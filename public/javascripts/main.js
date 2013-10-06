@@ -265,7 +265,7 @@
 			data.arbiter = 1;
 			data.description = $("#bet").val();
 
-			for (var i = 0; i < Things.length; i++) {
+			for (var i = 0; i < friends.length; i++) {
 				if(friends[i].id == data.proposer) {
 					data.proposer_name = friends[i].display_name;
 				}
