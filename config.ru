@@ -1,2 +1,2 @@
 require "./main"
-Alphabet.run!
+AlphabetApp.run!
