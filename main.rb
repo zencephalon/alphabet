@@ -59,7 +59,7 @@ class AlphabetApp < Sinatra::Base
         $bet_m.get_all.to_json
     end
 
-    get '/bets' do
+    get '/bets', auth: :user do
         liquid :bet
     end
     
@@ -71,7 +71,7 @@ class AlphabetApp < Sinatra::Base
         return (bet ? bet : []).to_json
     end
 
-    post '/bet' do
+    post '/bet', auth: :user do
         File.open("debug2","w") do |f|
             f.puts params
         end
