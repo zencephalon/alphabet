@@ -4,10 +4,13 @@ require 'bundler/setup'
 require 'sinatra'
 require 'mongo'
 require 'json'
+require 'net/http'
+require 'uri'
 
 require 'compass'
 
 require_relative './alphabet/alphabet'
+require_relative './secrets'
 
 class AlphabetApp < Sinatra::Base
     enable :sessions
@@ -63,8 +66,30 @@ class AlphabetApp < Sinatra::Base
         bets.to_json
     end
 
+    get '/categories.json' do
+        content_type :json
+
+        ['general'].to_json
+    end
+
     get '/login' do
-        liquid :login
+        redirect 'https://api.venmo.com/oauth/authorize?client_id=1431&scope=ACCESS_FRIENDS,ACCESS_PROFILE,MAKE_PAYMENTS', 303
+    end
+
+    get '/venmo_login' do
+        session[:access_token] = params[:access_token]
+        
+        uri = URI.parse('https://api.venmo.com/oauth/access_token')
+        response = Net::HTTP.post_form(uri, {'client_id' => 1431, 'client_secret' => Secrets::CLIENT_SECRET, 'code' => session[:access_token]})
+
+        session[:user_token] = response['access_token']
+        session[:user] = response['user']
+
+        File.open("debug","w") do |f|
+            f.puts session
+        end
+
+        redirect '/', 303
     end
 
     get '/logout' do

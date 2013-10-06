@@ -5,15 +5,12 @@ window.common = (function ($, document, window) {
 
     var url = "http://alphabet.io/";
 
-
-
 	/***
 	*	Private methods
 	***/
 	var formUri = function(uri) {
 		return uri;
 	};
-
 
 	/***
 	 *	Public methods
@@ -28,30 +25,34 @@ window.common = (function ($, document, window) {
 
 	common.post = function(data, endpoint) {
 		endpoint = endpoint || "bets";
-		enpoint = url + endpoint;
+		endpoint = url + endpoint;
+		var ret = new $.Deferred();
 		$.post(endpoint, function(data) {
-			// $( ".result" ).html( data );
-			window.console.dir(data);
+			ret.resolve(data);
 		});
+		return ret.promise();
 	};
 
 	common.get = function(endpoint) {
 		endpoint = endpoint || "bets";
-		enpoint = url + endpoint + ".json";
+		endpoint = url + endpoint + ".json";
+		var ret = new $.Deferred();
 		$.getJSON(endpoint, function(data) {
 			window.console.dir(data);
+			ret.resolve(data);
 		});
+		return ret.promise();
 	};
 
 	//	Redirect to new page
 	common.route = function(page, uri) {
 		uri = uri || "";
 		page = page || "index";
-		page = "/" + page + ".html";
+		page = "/" + page;
 		if(this.isset(uri)) {
 			page += formUri(uri);
 		}
-		window.open(page);
+		window.location = page;
 	};
 
     return common;
