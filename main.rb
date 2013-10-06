@@ -103,7 +103,7 @@ class AlphabetApp < Sinatra::Base
             uri = "https://api.venmo.com/users/#{session[:user]['id']}/friends?access_token=#{session[:user_token]}"
 
             response = Net::HTTP.get(uri)
-            response = response.body
+            response = JSON.parse(response.body)
             return response['data'].to_json
         else
             return [].to_json
