@@ -3,11 +3,17 @@
 
 	var DEFAULT_CATEGORY = "general";
 	var me = [];
+	var friends = [];
 
 	//	Get all types of betting categories
 	var getCategories = function() {
 		return c.get("categories");
 
+	};
+
+	//	Get logged in user's friends
+	var getFriends = function() {
+		return c.get("friends");
 	};
 
 	//	Get my information from Venmo or login process.
@@ -62,7 +68,7 @@
 			}
 		});
 
-		var nemesis = getNemesis();
+		var nemesis = null;
 		$("#pUser").append(me.name);
 		$("#aUser").append(nemesis.name);
 
@@ -77,7 +83,11 @@
 	$(function() {
 		getSelfInfo(function(data) {
 			me = data;
-			init();	//	init the page with default category
+			getFriends().done(function(friendList) {
+				friends = friendList;
+				window.console.dir(friends);
+				init();	//	init the page with default category
+			});
 		});
 	});
 
