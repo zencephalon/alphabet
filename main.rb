@@ -84,6 +84,8 @@ class AlphabetApp < Sinatra::Base
         end
 
         $bet_m.create(opt_hash)
+
+        ""
     end
 
     delete '/bet' do
