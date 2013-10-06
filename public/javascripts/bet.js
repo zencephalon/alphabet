@@ -95,6 +95,7 @@
 			data.acceptor_name = me.name;
 			data.acceptor_pic = $("#aUser-dropdown option:selected").val();
 			data.arbiter = 1;
+			data.arbiter_name = "Robby";
 			data.description = $("#bet").val();
 
 			data = JSON.stringify(data);
