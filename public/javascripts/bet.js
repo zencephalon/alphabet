@@ -5,8 +5,8 @@
 
 	//	Get all types of betting categories
 	var getCategories = function() {
-		var categories = c.get("categories") || ["general"];
-		return categories || [];
+		return c.get("categories");
+
 	};
 
 	//	Inject categories into the page
@@ -37,23 +37,24 @@
 	//	Inject the category options, select a default, and setup on click events.
 	var init = function(sorter) {
 		sorter = sorter || DEFAULT_CATEGORY;
-		var categories = getCategories();
-		var chosen = 0;
-		for (var i = 0; i < categories.length; i++) {
-			if(categories[i] === sorter) {
-				chosen = i;
+		getCategories().done(function(categories) {
+			var chosen = 0;
+			for (var i = 0; i < categories.length; i++) {
+				if(categories[i] === sorter) {
+					chosen = i;
+				}
 			}
-		}
-		injectCategories(categories, chosen);
-		showCategoryData(categories[chosen]);
+			injectCategories(categories, chosen);
+			showCategoryData(categories[chosen]);
 
-		for (var i = 0; i < categories.length; i++) {
-			var catObj = $("#"+categories[i]);
-			catObj.category = categories[i];
-			catObj.on('click', function() {
-				showCategoryData(catObj.category);
-			});
-		}
+			for (var i = 0; i < categories.length; i++) {
+				var catObj = $("#"+categories[i]);
+				catObj.category = categories[i];
+				catObj.on('click', function() {
+					showCategoryData(catObj.category);
+				});
+			}
+		});
 
 		$("#bet").on('click', function() {
 			window.console.log("placing a bet");
