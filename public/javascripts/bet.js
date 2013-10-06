@@ -86,12 +86,13 @@
 		$("#bet").on('click', function() {
 			window.console.log("placing a bet");
 			var data = {};
-			data.pUser = me.id;
-			data.pAmount = $("#p_amount").val();
-			data.pPic = me.picture;
-			data.aUser = $("#aUser-dropdown option:selected").attr("id");
-			data.aAmount = $("#a_amount").val();
-			data.aPic = $("#aUser-dropdown option:selected").val();
+			data.poser = me.id;
+			data.p_amount = $("#p_amount").val();
+			data.poser_pic = me.picture;
+			data.acceptor = $("#aUser-dropdown option:selected").attr("id");
+			data.a_amount = $("#a_amount").val();
+			data.acceptor_pic = $("#aUser-dropdown option:selected").val();
+			data.arbiter = 1;
 			data.description = $("#bet").val();
 
 			data = JSON.stringify(data);
