@@ -88,6 +88,16 @@ class AlphabetApp < Sinatra::Base
         # delete a bet
     end
 
+    get '/me' do
+        content_type :json
+
+        if logged_in?
+            return session[:user].to_json
+        else
+            return [].to_json
+        end
+    end
+
     get '/venmo_login' do
         session[:access_code] = params[:code]
         
