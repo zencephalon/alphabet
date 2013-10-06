@@ -78,14 +78,14 @@
 
 	//	Form the stakes section
 	var formStakesItem = function(stakes) {
-		var display = 	"<li style='display: inline-block; width: 200px; text-align: center;'>" +
-							"<h4>on the hook</h4>"	+
-							"<h2>" + $43 + "</h2>"	+
-						"</li>"
-			<li style="display: inline-block; width: 200px; text-align: center;">
-				<h4>could win</h4>
-				<h2>$43</h2>
-			</li>
+		var display =	"<li style='display: inline-block; width: 200px; text-align: center;'>" +
+							"<h4>on the hook</h4>"			+
+							"<h2>" + stakes.hook + "</h2>"	+
+						"</li>"								+
+						"<li style='display: inline-block; width: 200px; text-align: center;'>" +
+							"<h4>could win</h4>"			+
+							"<h2>" + stakes.win + "</h2>"	+
+						"</li>";
 	};
 
 	//	Start a new bet
