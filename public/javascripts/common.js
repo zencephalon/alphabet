@@ -3,7 +3,7 @@ window.common = (function ($, document, window) {
 
     var common = {};
 
-    var url = "http://alphabet.io";
+    var url = "http://alphabet.io/";
 
 
 
@@ -27,21 +27,19 @@ window.common = (function ($, document, window) {
     };
 
 	common.post = function(data, endpoint) {
-		endpoint = endpoint || "/bets";
-		$.post( endpoint, function( data ) {
+		endpoint = endpoint || "bets";
+		enpoint = url + endpoint;
+		$.post(endpoint, function(data) {
 			// $( ".result" ).html( data );
 			window.console.dir(data);
 		});
 	};
 
 	common.get = function(endpoint) {
-		endpoint = endpoint || "/bets.json";
-		$.getJSON(endpoint, function( data ) {
+		endpoint = endpoint || "bets";
+		enpoint = url + endpoint + ".json";
+		$.getJSON(endpoint, function(data) {
 			window.console.dir(data);
-			// var items = [];
-			// $.each(data, function( key, val ) {
-			//	items.push( "<li id ='" + key + "'>" + val + "</li>" );
-			// });
 		});
 	};
 
