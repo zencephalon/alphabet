@@ -83,6 +83,12 @@
 
 		$("#bet").on('click', function() {
 			window.console.log("placing a bet");
+			var pUser = $("#pUser").val();
+			var aUser = $("#aUser-dropdown option:selected").text();
+			var pAmount = $("#p_amount").val();
+			var aAmount = $("#a_amount").val();
+			var description = $("#bet").val();
+
 			var formData = $('#form').serializeArray();
 			c.post(formData, "bet").done(function() {
 				c.route("main");
