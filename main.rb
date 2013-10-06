@@ -44,7 +44,7 @@ class AlphabetApp < Sinatra::Base
         liquid :index
     end
 
-    get '/main', auth: :user do
+    get '/main' do
         liquid :main
     end
 
