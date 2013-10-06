@@ -3,8 +3,12 @@
 
 	//	Request all the feed items to display, sorted clientside
 	var getFeedItems = function() {
-		var feedItems = c.get("feed.json");
-		return feedItems || [];
+		// var feedItems = c.get("feed.json");
+		// return feedItems || [];
+		return [{proposer: "joe", acceptor: "jill", arbiter: "lauren", 
+			p_amount: 100, a_amount: 50, description: "how quickly will venmo shut this down?", id: 1 },
+			{proposer: "kate", acceptor: "vick", arbiter: "lauren", 
+			p_amount: 300, a_amount: 800, description: "is the sky falling?", id: 2 }];
 	};
 
 	//	Get my information from Venmo or login process.
@@ -15,6 +19,7 @@
 	//	Sort order/type of feed
 	var sortFeed = function(feedItems, sorter) {
 		feedItems = feedItems || [];
+		sorter = sorter || "all";
 		var me = getSelfInfo();
 		var sortedList = [];
 		var tempList = [];
@@ -31,7 +36,7 @@
 		}
 		else if(sorter === "judge") {	//	Items I'm judging first
 			for (var i = 0; i < feedItems.length; i++) {
-				if(feedItems[i]["descriptor"].judge === me) {
+				if(feedItems[i]["arbiter"] === me) {
 					sortedList.append(feedItems[i]);
 				}
 				else {
@@ -40,7 +45,7 @@
 			}
 			sortedList.concat(tempList);
 		}	
-		else {	//	Any order
+		else {	//	all : Any order
 			sortedList = feedItems;
 		}
 		return sortedList;
@@ -65,10 +70,10 @@
 	};
 
 	//	Prepare and display the sorted feed items
-	var init = function(sortBy) {
-		sortBy = sortBy || "all";
+	var init = function(sorter) {
+		sorter = sorter || "all";
 		var feedItems = getFeedItems();
-		var sorted = sortFeed(feedItems, sortBy);
+		var sorted = sortFeed(feedItems, sorter);
 		for (var i = 0; i < sorted.length; i++) {
 			var item = formFeedItem(sorted[i]);
 			$("feed").append(item);
@@ -77,6 +82,19 @@
 
 	$(function() {
 		init();	//	init the page with feed when ready
+
+		$("#sortAll").click(function() {
+			init("all");
+		});
+		$("#sortSelf").click(function() {
+			init("self");
+		});
+		$("#sortJudge").click(function() {
+			init("judge");
+		});
+		$("#makeBet").click(function() {
+			makeBet();
+		});
 	});
 
 
