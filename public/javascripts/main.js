@@ -267,7 +267,6 @@
 			window.console.dir(data);
 			c.post(data, "bet").done(function() {
 				// c.route("main");
-				break;
 			});
 		});
 
