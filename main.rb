@@ -6,7 +6,6 @@ require 'mongo'
 require 'json'
 require 'net/http'
 require 'uri'
-
 require 'compass'
 
 require_relative './alphabet/alphabet'
@@ -21,35 +20,50 @@ class AlphabetApp < Sinatra::Base
 
     $alphabet = Alphabet.new(Mongo::MongoClient.new('localhost', 27017))
     $bet_m = $alphabet.bet_m
+    $user_m = $alphabet.user_m
+
+    # ============ Helpers ==================
+    helpers do
+        def logged_in?
+            !session[:user].nil?
+        end
+
+        def user
+            session[:user]
+        end
+    end
+
+    set(:auth) do |roles|
+        condition do
+            redirect '/login', 303 unless logged_in?
+        end
+    end
 
     # ============== Main Site Routs ============
     get '/' do
         liquid :index
     end
 
-    get '/main', auth: :user do
+    get '/main' do
         liquid :main
     end
 
     get '/categories.json' do
         content_type :json
-
         ['general'].to_json
     end
 
     # ================= Bets ===================
     get '/feed.json' do
         content_type :json
-
-        bets = $bet_m.get_all
-        bets.to_json
+        $bet_m.get_all.to_json
     end
 
-    get '/bets' do
+    get '/bets', auth: :user do
         liquid :bet
     end
     
-    get '/bet.json' do
+    get '/bet.json', auth: :user do
         content_type :json
         id = params[:_id]
 
@@ -58,8 +72,12 @@ class AlphabetApp < Sinatra::Base
     end
 
     post '/bet' do
+        File.open("debug2","w") do |f|
+            f.puts params
+        end
+
         opt_hash = {}
-        ['description', 'proposer', 'acceptor', 'arbiter', 'p_amount', 'a_amount'].each do |key|
+        ['description', 'proposer', 'acceptor', 'arbiter', 'p_amount', 'a_amount', 'proposer_name', 'acceptor_name', 'arbiter_name', 'proposer_pic', 'arbiter_pic', 'acceptor_pic'].each do |key|
             opt_hash[key] = params[key]
         end
 
@@ -71,7 +89,10 @@ class AlphabetApp < Sinatra::Base
     end
 
     post '/bet/resolve' do
+        bet_id = params[:id]
+        winner_id = params[:winner]
 
+        json = $bet_m.resolve(bet_id, winner_id)
     end
 
     # ================ Venmo Endpoints =============
@@ -91,6 +112,16 @@ class AlphabetApp < Sinatra::Base
         end
     end
 
+    get '/user.json' do
+        id = params[:id]
+        if logged_in?
+            uri = URI.parse("#{VENMO}/users/#{id}?access_token=#{session[:user_token]}")
+            return Net::HTTP.get(uri)
+        else
+            return [].to_json
+        end
+    end
+
     # =================== Login ====================
     get '/login' do
         redirect "#{VENMO}/oauth/authorize?client_id=1431&scope=ACCESS_FRIENDS,ACCESS_PROFILE,MAKE_PAYMENTS&response_type=code", 303
@@ -103,7 +134,9 @@ class AlphabetApp < Sinatra::Base
         response = JSON.parse(Net::HTTP.post_form(uri, {'client_id' => 1431, 'client_secret' => Secrets::CLIENT_SECRET, 'code' => session[:access_code]}).body)
 
         session[:user_token] = response['access_token']
-        session[:user] = response["user"]
+        session[:user] = response['user']
+
+        $user_m.create({_id: session[:user]['id'], token: session[:user_token]})
 
         redirect '/main', 303
     end
@@ -134,23 +167,6 @@ class AlphabetApp < Sinatra::Base
 
     get '/screen.css' do
          scss(:"stylesheets/screen" )
-    end
-
-    # ============ Helpers ==================
-    helpers do
-        def logged_in?
-            !session[:user].nil?
-        end
-
-        def user
-            session[:user]
-        end
-    end
-
-    set(:auth) do |roles|
-        condition do
-            redirect '/login', 303 unless logged_in?
-        end
     end
 end
 

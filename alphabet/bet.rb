@@ -1,16 +1,24 @@
-require_relative "./mongo"
+require_relative './mongo'
+require 'open-uri'
 
 module Bets
     RUBY_TO_MONGO = {_id: :_id,
                      description: :d, # description of the bet (string)
-                     proposer: :p,  # proposer of the bet (string)
-                     acceptor: :a,  # acceptor of the bet (string)
-                     arbiter: :rb,  # arbiter of the bet (string optional)
+                     proposer: :p,  # proposer of the bet id (string)
+                     acceptor: :a,  # acceptor of the bet id (string)
+                     arbiter: :rb,  # arbiter of the bet id (string optional)
+                     proposer_name: :pn,
+                     acceptor_name: :an,
+                     arbiter_name: :rbn,
+                     proposer_pic: :pp,
+                     acceptor_pic: :ap,
+                     arbiter_pic: :rbp,
                      p_amount: :pa, # amount wagered by proposer in cents (int)
                      a_amount: :aa, # amount wagered by aceptor in cents (int)
                      type: :t,      # type of bet (string)
                      condition: :c, # condition for auto-arb bets (object ref)
-    }
+                     resolved: :r,
+    }.freeze
     MONGO_TO_RUBY = RUBY_TO_MONGO.invert.freeze
 
     class Bet < Struct.new *RUBY_TO_MONGO.keys
@@ -24,7 +32,8 @@ module Bets
     class BetManager
         def initialize(alphabet)
             @alphabet = alphabet
-            @bet_db = alphabet.db.collection('bets')
+            @bet_db = @alphabet.db.collection('bets')
+            @user_m = @alphabet.user_m
         end
 
         def mongo_to_ruby(mongo_obj)
@@ -45,6 +54,28 @@ module Bets
             @bet_db.insert(mongo_obj)
 
             return bet
+        end
+
+        def resolve(id, user_id)
+            bet = get(id)
+            if bet
+                bet.resolved = user_id
+                p = bet.proposer
+                proposer = @user_m.get(p)
+
+                uri = URI.parse("https://api.venmo.com/payments")
+                # the proposer won the bet, he makes a charge
+                if p == user_id
+                    amount = -1 * (a_amount/100).round(2)
+                    note = URI::encode("You lost the bet '#{bet.description}' to #{bet.proposer_name} for $#{amount}")
+                # the proposer lost the bet, he makes a payment
+                else
+                    amount = (p_amount/100).round(2)
+                    note = URI::encode("You won the bet '#{bet.description}' for $#{amount} from #{bet.proposer_name}")
+                end
+
+                return JSON.parse(Net::HTTP.post_form(uri, {'note' => note, 'access_token' => proposer.token, 'amount' => -amount, 'user_id' => bet.acceptor}))
+            end
         end
 
         def get_all()

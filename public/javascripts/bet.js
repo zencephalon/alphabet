@@ -45,11 +45,21 @@
 		$("#form").append(data);
 	};
 
+	var injectFriends = function() {
+		$("#aUser-dropdown").empty();
+		for (var i = 0; i < friends.length; i++) {
+			$("#aUser-dropdown").append("<option id=" + friends[i].id + " value='" + 
+				friends[i].profile_picture_url + "'>" + friends[i].display_name + "</option>");
+		}
+	};
 
 	//	Inject the category options, select a default, and setup on click events.
 	var init = function(sorter) {
 		sorter = sorter || DEFAULT_CATEGORY;
+		injectFriends();
+		$("#pImage").attr("src", me.picture); 
 		getCategories().done(function(categories) {
+			categories = ["general"];
 			var chosen = 0;
 			for (var i = 0; i < categories.length; i++) {
 				if(categories[i] === sorter) {
@@ -68,23 +78,40 @@
 			}
 		});
 
-		var nemesis = null;
+		// var nemesis = {name: "test"};
 		$("#pUser").append(me.name);
-		$("#aUser").append(nemesis.name);
+		// $("#aUser").append(nemesis.name);
 
 		$("#bet").on('click', function() {
 			window.console.log("placing a bet");
-			var formData = $('#form').serializeArray();
-			c.post(formData, "bet");
-			c.route("main");
+			var data = {};
+			data.pUser = me.id;
+			data.pAmount = $("#p_amount").val();
+			data.pPic = me.picture;
+			data.aUser = $("#aUser-dropdown option:selected").attr("id");
+			data.aAmount = $("#a_amount").val();
+			data.aPic = $("#aUser-dropdown option:selected").pic;
+			data.description = $("#bet").val();
+
+			data = JSON.serialize(data);
+
+			window.console.dir(data);
+			c.post(data, "bet").done(function() {
+				c.route("main");
+			});
+		});
+
+		$("#aUser-dropdown").change(function() {
+			var sel = $(this).val();
+			$("#aImage").attr("src", sel.pic); 
 		});
 	};
 
 	$(function() {
-		getSelfInfo(function(data) {
+		getSelfInfo().done(function(data) {
 			me = data;
 			getFriends().done(function(friendList) {
-				friends = friendList;
+				friends = (friendList.data).sort();
 				window.console.dir(friends);
 				init();	//	init the page with default category
 			});
