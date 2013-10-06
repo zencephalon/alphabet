@@ -17,6 +17,8 @@ class AlphabetApp < Sinatra::Base
     set :bind, '0.0.0.0'
     set :port, 1111
 
+    VENMO = "https://api.venmo.com"
+
     $alphabet = Alphabet.new(Mongo::MongoClient.new('localhost', 27017))
     $bet_m = $alphabet.bet_m
 
@@ -51,7 +53,7 @@ class AlphabetApp < Sinatra::Base
 
     set(:auth) do |roles|
         condition do
-            redirect '/', 303 unless logged_in?
+            redirect '/login', 303 unless logged_in?
         end
     end
 
@@ -73,15 +75,28 @@ class AlphabetApp < Sinatra::Base
     end
 
     get '/login' do
-        redirect 'https://api.venmo.com/oauth/authorize?client_id=1431&scope=ACCESS_FRIENDS,ACCESS_PROFILE,MAKE_PAYMENTS&response_type=code', 303
+        redirect "#{VENMO}/oauth/authorize?client_id=1431&scope=ACCESS_FRIENDS,ACCESS_PROFILE,MAKE_PAYMENTS&response_type=code", 303
     end
 
     post '/bet/resolve' do
 
     end
 
+    get '/bet.json' do
+        content_type :json
+        id = params[:_id]
+
+        bet = $bet_m.get(id)
+        return (bet ? bet : []).to_json
+    end
+
     post '/bet' do
-        # create the bet
+        opt_hash = {}
+        ['description', 'proposer', 'acceptor', 'arbiter', 'p_amount', 'a_amount'].each do |key|
+            opt_hash[key] = params[key]
+        end
+
+        $bet_m.create(opt_hash)
     end
 
     delete '/bet' do
@@ -101,7 +116,7 @@ class AlphabetApp < Sinatra::Base
     get '/friends.json' do
         content_type :json
         if logged_in?
-            uri = URI.parse("https://api.venmo.com/users/#{session[:user]['id']}/friends?access_token=#{session[:user_token]}&limit=1000")
+            uri = URI.parse("#{VENMO}/users/#{session[:user]['id']}/friends?access_token=#{session[:user_token]}&limit=1000")
 
             return Net::HTTP.get(uri)
         else
@@ -112,26 +127,14 @@ class AlphabetApp < Sinatra::Base
     get '/venmo_login' do
         session[:access_code] = params[:code]
         
-        uri = URI.parse('https://api.venmo.com/oauth/access_token')
+        uri = URI.parse("#{VENMO}/oauth/access_token")
         response = Net::HTTP.post_form(uri, {'client_id' => 1431, 'client_secret' => Secrets::CLIENT_SECRET, 'code' => session[:access_code]})
 
         response = JSON.parse(response.body)
         session[:user_token] = response['access_token']
         session[:user] = response["user"]
 
-        File.open("debug","w") do |f|
-            f.puts Secrets::CLIENT_SECRET
-            f.puts session[:access_code]
-            f.puts response.class
-            f.puts "-------------"
-            f.puts session[:user]
-        end
-
         redirect '/', 303
-    end
-
-    get '/logout' do
-
     end
 
     # if logged in CHANGE USING PERMISSIONS
@@ -140,9 +143,8 @@ class AlphabetApp < Sinatra::Base
 
     end
 
-    get '/bet' do
+    get '/bets' do
         liquid :bet
-
     end
 
     not_found do

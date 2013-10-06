@@ -50,5 +50,10 @@ module Bets
         def get_all()
             @bet_db.find({}, {limit: 100}).to_a.map {|b| mongo_to_ruby(b).to_liquid}
         end
+
+        def get(id)
+            bet = @bet_db.find_one({_id: id})
+            return bet ? mongo_to_ruby(bet) : nil
+        end
     end
 end
