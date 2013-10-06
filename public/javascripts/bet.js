@@ -50,6 +50,7 @@
 	var init = function(sorter) {
 		sorter = sorter || DEFAULT_CATEGORY;
 		getCategories().done(function(categories) {
+			categories = ["general"];
 			var chosen = 0;
 			for (var i = 0; i < categories.length; i++) {
 				if(categories[i] === sorter) {
