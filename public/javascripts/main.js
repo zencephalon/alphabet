@@ -57,6 +57,7 @@
 
 	//	Form a feed item from one listing object
 	var formFeedItem = function(item) {
+		console.dir(item);
 
 		var itemId = "item-"+item.id;
 		var winnings = 0;
@@ -204,10 +205,10 @@
 	var showCategoryData = function(cat) {
 		var data = "";
 		if(cat === "general") {
-			data =	"Bet: <input type='text' name='description' id='bet'>";
+			data =	"<textarea name='textarea' name='description' id='bet'>what's yer wager?</textarea>";
 		}
-		$('#form').empty();
-		$("#form").append(data);
+		$('#bet-canvas').empty();
+		$("#bet-canvas").append(data);
 	};
 
 	var injectFriends = function() {
@@ -253,14 +254,25 @@
 		$("#bet").on('click', function() {
 			window.console.log("placing a bet");
 			var data = {};
-			data.poser = me.id;
+			data.proposer = me.id;
+			data.proposer_name = "";
 			data.p_amount = $("#p_amount").val();
-			data.poser_pic = me.picture;
+			data.proposer_pic = me.picture;
 			data.acceptor = $("#aUser-dropdown option:selected").attr("id");
+			data.acceptor_name = "";
 			data.a_amount = $("#a_amount").val();
 			data.acceptor_pic = $("#aUser-dropdown option:selected").val();
 			data.arbiter = 1;
 			data.description = $("#bet").val();
+
+			$.each(friends, function(index, val) {
+				if(friends[index].id == data.proposer) {
+					data.proposer_name = friends[index].display_name;
+				}
+				else if(friends[index].id == data.acceptor) {
+					data.acceptor_name = friends[index].display_name;
+				}
+			});
 
 			data = JSON.stringify(data);
 

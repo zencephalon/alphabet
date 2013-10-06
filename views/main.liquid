@@ -56,8 +56,8 @@
 								<option value = "2">bet on the weather</option>
 							</select>
 						</div>
-						<div class="bet-canvas">
-							<textarea name="textarea">what's yer wager?</textarea>
+						<div class="bet-canvas" id="bet-canvas">
+							
 						</div>
 					</div>
 					<div class="people">
@@ -66,22 +66,22 @@
 								<img id="pImage" src="" />
 								<div class="price">
 									<h3>
-										<span>$</span><b><input type="text" maxlength="2" >50</input></b><span>$</span>
+										<span>$</span><b><input id="p_amount" name="p_amount" type="text" maxlength="2" >50</input></b><span>$</span>
 									</h3>
 								</div>
 								<hr />
 							</li>
 							<li class="right">
+								<select id="aUser-dropdown">
+								</select>
 								<div class="price">
 									<h3>
-										<span>$</span><b><input type="text" maxlength="2" >50</input></b><span>$</span>
+										<span>$</span><b><input id="a_amount" name="a_amount" type="text" maxlength="2" >50</input></b><span>$</span>
 									</h3>
 								</div>
 								<img id="aImage" src="" />
 								<hr />
 							</li>
-					<select id="aUser-dropdown">
-					</select>
 						</ul>
 					</div>
 					<button class="submit" id="bet"><i class="icon-exchange"></i> challenge</button>
