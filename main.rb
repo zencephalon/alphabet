@@ -37,6 +37,11 @@ class Alphabet < Sinatra::Base
 
     end
 
+    get '/bet' do
+        liquid :bet
+
+    end
+
     not_found do
         liquid :fourohfour, layout: false
     end
