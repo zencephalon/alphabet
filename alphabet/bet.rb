@@ -48,7 +48,7 @@ module Bets
         end
 
         def get_all()
-            @bet_db.find({limit: 100}).to_a.map {|b| mongo_to_ruby(b).to_liquid}
+            @bet_db.find({}, {limit: 100}).to_a.map {|b| mongo_to_ruby(b).to_liquid}
         end
     end
 end
