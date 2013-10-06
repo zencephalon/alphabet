@@ -77,7 +77,7 @@ class AlphabetApp < Sinatra::Base
     end
 
     post '/bet/resolve' do
-        # take bet id and winner name
+
     end
 
     post '/bet' do
@@ -98,20 +98,32 @@ class AlphabetApp < Sinatra::Base
         end
     end
 
+    get '/friends.json' do
+        if logged_in?
+            uri = "https://api.venmo.com/users/#{session[:user]['id']}/friends?access_token=#{session[:user_token]}"
+
+            response = Net::HTTP.get(uri)
+            response = response.body
+            return response['data'].to_json
+        else
+            return [].to_json
+        end
+    end
+
     get '/venmo_login' do
         session[:access_code] = params[:code]
         
         uri = URI.parse('https://api.venmo.com/oauth/access_token')
         response = Net::HTTP.post_form(uri, {'client_id' => 1431, 'client_secret' => Secrets::CLIENT_SECRET, 'code' => session[:access_code]})
 
-        response = response.body
+        response = JSON.parse(response.body)
         session[:user_token] = response['access_token']
-        session[:user] = response['user']
+        session[:user] = response["user"]
 
         File.open("debug","w") do |f|
             f.puts Secrets::CLIENT_SECRET
             f.puts session[:access_code]
-            f.puts response
+            f.puts response.class
             f.puts "-------------"
             f.puts session[:user]
         end
