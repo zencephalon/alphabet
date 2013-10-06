@@ -102,8 +102,8 @@
 		});
 
 		$("#aUser-dropdown").change(function() {
-			var sel = $(this).val();
-			$("#aImage").attr("src", sel.pic); 
+			var pic = $(this).val();
+			$("#aImage").attr("src", pic); 
 		});
 	};
 
