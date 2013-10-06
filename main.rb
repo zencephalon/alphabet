@@ -4,6 +4,8 @@ require 'bundler/setup'
 require 'sinatra'
 require 'mongo'
 require 'json'
+require 'net/http'
+require 'uri'
 
 require 'compass'
 
@@ -78,7 +80,7 @@ class AlphabetApp < Sinatra::Base
         session[:access_token] = params[:access_token]
         
         uri = URI.parse('https://api.venmo.com/oauth/access_token')
-        response = Net::HTTP.post_form(uri, {'client_id': 1431, 'client_secret': Secrets::CLIENT_SECRET, 'code': session[:access_token]})
+        response = Net::HTTP.post_form(uri, {'client_id' => 1431, 'client_secret' => Secrets::CLIENT_SECRET, 'code' => session[:access_token]})
 
         session[:user_token] = response['access_token']
         session[:user] = response['user']
