@@ -12,8 +12,8 @@ GEM
     liquid (2.5.0)
     mongo (1.8.5)
       bson (~> 1.8.5)
-    rack (1.5.2)
-    rack-protection (1.5.0)
+    rack (1.6.13)
+    rack-protection (1.5.5)
       rack
     sass (3.2.12)
     sinatra (1.4.2)
